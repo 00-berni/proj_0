@@ -32,10 +32,15 @@
 
 **Input**
 
-- Coordinates in azimuthal of the object
-- Coordinates of obs position on the Earth 
-- The time of the obs
+- Coordinates (alpha, delta) of the object
+- Coordinates (long, lat, alt) of obs position on the Earth 
+- The time of the obs [YY, MM, DD, hh, mm, ss.ss]
 
 **Output**
+
+- Coordinates (HA, zenit) of the object
+- Coordinates (HA, zenit) of the Sun
+- Coordinates (HA, zenit) of the Moon
+- Airmass
 
 The visibility plot
