@@ -28,7 +28,7 @@
 
 ---
 
-  ## Task
+## Task
 
 **Input**
 
@@ -44,3 +44,7 @@
 - Airmass
 
 The visibility plot
+
+## Bibliography
+
+ - Explanatory supplement to the Astronomical almanac
