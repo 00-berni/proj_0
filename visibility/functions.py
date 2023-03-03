@@ -146,7 +146,7 @@ if __name__ == "__main__":
     print(delta.rad)
     delta.rad = 4*pi
     delta.rad_to_deg()
-    print(delta.deg)
+    print(type(delta))
 
 
 
