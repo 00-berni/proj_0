@@ -33,7 +33,7 @@
 **Input**
 
 - Coordinates (alpha, delta) of the object
-- Coordinates (long, lat, alt) of obs position on the Earth 
+- Coordinates (long, lat, alt, zone time) of obs position on the Earth 
 - The time of the obs [YY, MM, DD, hh, mm, ss.ss]
 
 **Output**
@@ -45,7 +45,7 @@
 
 The visibility plot
 
-## Bibliography
+## References
 
- - _Explanatory supplement to the Astronomical almanac_
- - _Textbook on Spherical Astronomy_
+ 1. _Explanatory supplement to the Astronomical almanac_
+ 2. _Textbook on Spherical Astronomy_
