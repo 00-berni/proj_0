@@ -1,0 +1,6 @@
+# test results
+**/test_*_results.txt
+
+# notebook stuff
+**/.ipynb_checkpoints
+**/.ipynb_checkpoints/*
