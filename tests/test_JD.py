@@ -1,4 +1,6 @@
 import numpy as np
+from test_struc import *
+
 
 def JulianDay(year: int, month: int, day: float, calendar: str = 'Gregorian') -> float:
     """Computing the Julian Day
@@ -38,33 +40,23 @@ def JulianDay(year: int, month: int, day: float, calendar: str = 'Gregorian') ->
 
 
 if __name__ == '__main__':
-    
-    SEP = lambda obj : '------' + obj + '------\n'
-    print(SEP('TEST FOR JULIAN DAY'))
-    print('Start\n')
+
+    starting_test('TEST FOR JULIAN DAY')
+
     try:
-        import os.path as ph
-        TEST_DIR = ph.dirname(ph.realpath(__file__))
-        TEST_FILE = ph.join(TEST_DIR,'test_JD_data.csv')
-
-        print('Open the test file: ' + TEST_FILE)
-
-        from pandas import read_csv
-        data = read_csv(TEST_FILE).to_numpy().transpose()
-        years, months, days, cal, JD0 = data
+        years, months, days, cal, JD0 = get_test_data('test_JD_data.csv')
 
         JD = np.array([JulianDay(years[i],months[i],days[i],cal[i]) for i in range(len(years))])
-        print('\nJD0')
+        print('> Compute the JD')
+        print('JD0')
         for jd, jd0 in zip(JD,JD0):
             if jd == jd0:
                 print(f'{jd0}: OK!')
             else:
                 print(f'{jd0}: NO MATCH --> DIFF = {jd-jd0}\n\tJD = {jd}')
 
-        print('\nALL RESULTS MATCHED!')
+        print('> All results matched')
 
-        print('\nTEST COMPLITED!')
-        print(SEP('----------'))
+        ending_test()
     except:
-        print('\nTEST FAILD!')
-        raise
+        test_error()

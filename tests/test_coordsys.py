@@ -1,4 +1,5 @@
 import numpy as np
+from test_struc import *
 from test_angle_class import *
 
 class Equatorial():
@@ -6,15 +7,43 @@ class Equatorial():
         self.alpha = alpha
         self.delta = delta
 
+    def print_values(self, sel: str = 'all'):
+        alpha_str = 'alpha:\t'+self.alpha.print_angle('hms')
+        delta_str = 'delta:\t'+self.delta.print_angle('deg')
+        if sel == 'alpha': return alpha_str
+        elif sel == 'delta': return delta_str
+        elif sel == 'all': return 'Equatorial Coordinates:\n' + alpha_str + delta_str
+        else: raise Exception(f'!Error: `{sel}` is not allowed!\nSee the docstring of `print_values()` function')
+
+
+
 class Ecliptical():
     def __init__(self, lon: HAngles, lat: HAngles) -> None:
         self.lon = lon
         self.lat = lat
 
+    def print_values(self, sel: str = 'all'):
+        lon_str = 'lambda:\t'+self.lon.print_angle('deg')
+        lat_str = 'beta:\t'+self.lat.print_angle('deg')
+        if sel == 'lon': return lon_str
+        elif sel == 'lat': return lat_str
+        elif sel == 'all': return 'Ecliptical Coordinates:\n' + lon_str + lat_str
+        else: raise Exception(f'!Error: `{sel}` is not allowed!\nSee the docstring of `print_values()` function')
+
+
 class AltAz():
     def __init__(self, alt: HAngles, az: HAngles) -> None:
         self.alt = alt
         self.az = az
+    
+    def print_values(self, sel: str = 'all'):
+        alt_str = 'alt:\t'+self.alt.print_angle('deg')
+        az_str = 'az:\t'+self.az.print_angle('deg')
+        if sel == 'alt': return alt_str
+        elif sel == 'az': return az_str
+        elif sel == 'all': return 'Local Coordinates:\n' + alt_str + az_str
+        else: raise Exception(f'!Error: `{sel}` is not allowed!\nSee the docstring of `print_values()` function')
+
 
 def equat_to_eclipt(eq_coor: Equatorial, e: Angles) -> Ecliptical:
     alpha = eq_coor.alpha
@@ -70,8 +99,8 @@ def altaz_to_equat(loc_coor: AltAz, LST: HAngles, lat: Angles) -> Equatorial:
 
 
 if __name__ == '__main__':
-    SEP = lambda obj : '------' + obj + '------\n'
-    print(SEP('TEST COORDINATE SYSTEM'))
+
+    starting_test('TEST COORDINATE SYSTEM')
 
     try:    
         alpha = [7,45,18.946]
@@ -82,13 +111,11 @@ if __name__ == '__main__':
         delta = HAngles(HAngles.decimal(delta),'deg')
         epsilon = Angles(epsilon,'deg')
 
-        print('TEST: FROM EQUATORIAL TO ECLIPTIC')
-        print('Epoch 2000')
-        print('alpha:\t'+alpha.print_angle('rad'))
-        print('delta:\t'+delta.print_angle('rad'))
-
+        print('> FROM EQUATORIAL TO ECLIPTIC')
 
         eq_coor = Equatorial(alpha,delta)
+        print('Epoch 2000')
+        print(eq_coor.print_values())
 
         ec_coor = equat_to_eclipt(eq_coor,epsilon)
 
@@ -96,36 +123,25 @@ if __name__ == '__main__':
         lat = ec_coor.lat
 
         print('Ecliptic coordinates')
-        print('lambda:\t'+lon.print_angle('deg')+f'--> {HAngles.decimal(lon.deg[1])}')
-        print('beta:\t'+lat.print_angle('deg')+f'--> {HAngles.decimal(lat.deg[1])}')
+        print(ec_coor.print_values('lon')+f'--> {HAngles.decimal(lon.deg[1])}')
+        print(ec_coor.print_values('lat')+f'--> {HAngles.decimal(lat.deg[1])}')
 
         print()
 
-        print('Try to recover equatorial from results')
-        print('\nTEST: FROM ECLIPTIC TO EQUATORIAL')
+        print('> Try to recover equatorial from results')
+        print('> FROM ECLIPTIC TO EQUATORIAL')
 
         test_data = [alpha.rad,delta.rad]
 
         eq_coor = eclipt_to_equat(ec_coor,epsilon)
 
+        print(eq_coor.print_values())
+        
         alpha = eq_coor.alpha
         delta = eq_coor.delta
-        
 
-        if alpha.rad == test_data[0] and delta.rad/pi == test_data[1]/pi:
-            print('Equatorial coordinates')
-            print('alpha:\t'+alpha.print_angle('hms'))
-            print('delta:\t'+delta.print_angle('deg'))
+        if alpha.rad != test_data[0] or delta.rad/pi != test_data[1]/pi: raise Exception('Results are not the same!')           
 
-            print('\n!TEST COMPLETE!')
-            print(SEP('----------'))
-        else:
-            print('Equatorial coordinates')
-            print('alpha:\t'+alpha.print_angle('rad'))
-            print('delta:\t'+delta.print_angle('rad'))
-
-            # print('\n!TEST FAILD!')
-            raise Exception('Results are not the same!')           
+        ending_test()
     except:
-        print('\n!TEST FAILD!')
-        raise
+        test_error()

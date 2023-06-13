@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import pi
 import matplotlib.pyplot as plt
+from test_struc import *
 
 
 ## angle classes
@@ -439,13 +440,14 @@ FLAT = Angles(180.,'deg')
         
 
 if __name__ == "__main__":
-    SEP = '-------'
-    print(SEP+'TEST ANGLE CLASSES'+SEP+'\n')
+
+    starting_test('TEST ANGLE CLASSES')
+
     try:
 
         ang1 = HAngles(['+',[12,5,7]],'hms')
         ang2 = HAngles(30,'rad')
-        print('Start')
+        print('> Define two angles')
         print('ang1\n' + ang1.print_angle())
         print('ang2\n' + ang2.print_angle())
 
@@ -454,13 +456,12 @@ if __name__ == "__main__":
         mulang1 = ang1 * 2
         mulang2 = ang2 * -1
 
-
+        print('> Compute operations')
         print('ang1 + ang2\n' + sumang.print_angle())
         print('ang1 - ang2\n' + subang.print_angle())
         print('ang1 * 2\n' + mulang1.print_angle())
         print('ang2 * -1\n' + mulang2.print_angle())
 
-        print('\nTEST COMPLETE!\n'+SEP)
+        ending_test()
     except:
-        print('TEST FAILD!\n'+SEP)
-        raise
+        test_error()
