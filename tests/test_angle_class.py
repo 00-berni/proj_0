@@ -45,7 +45,9 @@ class Angles():
         :return: angle float value
         :rtype: float
         """
-        return ang[0] + ang[1]/60 + ang[2]/3600
+        if sum(ang) == 0: return 0
+        else: return ang[0] + ang[1]/60 + ang[2]/3600
+
 
     @staticmethod
     def std_format(sign: int | str, ang: np.ndarray | list, lim: int | None = 360) -> list:
@@ -134,14 +136,14 @@ class Angles():
         :rtype: list
         """
         # getting the sign
-        sign = np.sign(rad)
+        sign = np.sign(rad) if rad != 0 else 1
         # computing degrees
         ang = np.abs(rad) * 180 / pi
         # adjusting the format
         deg = Angles.std_format(sign,[ang,0,0],lim=lim)
         return deg
 
-    def __init__(self, ang: float | list, unit: str, lim: int = 360) -> None:
+    def __init__(self, ang: float | list | None, unit: str | None = None, lim: int = 360) -> None:
         """Constructor of the class
 
         The function takes a value (`ang`) and the corrisponding 
@@ -157,8 +159,11 @@ class Angles():
         """
         # setting lim
         self.lim = lim
+        if ang is None:
+            self.deg = []
+            self.rad = None
         # value in radiants
-        if unit == 'rad':
+        elif unit == 'rad':
             self.rad = ang
             self.deg = Angles.rad_to_deg(ang,lim=lim)
         # value in degrees
@@ -166,12 +171,27 @@ class Angles():
             # `ang` is a float
             if type(ang) != list:
                 # getting the sign
-                sign = np.sign(ang)
+                sign = np.sign(ang) if ang != 0 else 1
                 self.deg = Angles.std_format(sign,[np.abs(ang),0,0],lim=lim)
             else:
                 self.deg = [ang[0], np.copy(ang[1])]
             self.rad = Angles.deg_to_rad(self.deg)
-            
+
+    def decformat(self) -> float:
+        """Function to convert a list angle
+        [val, val, val.val] in a float 
+        val.val 
+
+        :param ang: angle array value in deg or hms
+        :type ang: np.ndarray | list
+        
+        :return: angle float value
+        :rtype: float
+        """
+        sign = Angles.strsign[self.deg[0]]
+        ang = self.deg[1]
+        return Angles.decimal(ang)*sign
+
     def print_angle(self,sel: str = 'all') -> str:
         """Function to print the value of an angle
         in all units
@@ -238,6 +258,9 @@ class Angles():
         :rtype: Angles
         """
         return Angles(self.rad*val,'rad',lim=self.lim)
+    
+    def __neg__(self):
+        return self * -1
 
 
 
@@ -337,7 +360,7 @@ class HAngles(Angles):
         rad = Angles.deg_to_rad(deg)
         return rad
     
-    def __init__(self, ang: float | list, unit: str, lim: int = 360):
+    def __init__(self, ang: float | list | None, unit: str | None = None, lim: int = 360):
         """Constructor of the class (inherited from :class: `Angles`)
 
         The function takes a value (`ang`) and the corrisponding 
@@ -353,11 +376,13 @@ class HAngles(Angles):
         """
         # `Angles.__init__()` function
         super().__init__(ang, unit, lim)
+        if ang is None:
+            self.hms = []
         # angle in hms
-        if unit == 'hms':
+        elif unit == 'hms':
             # `ang` is a float
             if type(ang) != list:
-                sign = np.sign(ang)
+                sign = np.sign(ang) if ang != 0 else 1
                 self.hms = Angles.std_format(sign,[np.abs(ang),0,0],lim=None)
             else:
                 self.hms = [ang[0], np.copy(ang[1])]
@@ -391,6 +416,14 @@ class HAngles(Angles):
         if sel == 'hms': return hms_str
         elif sel == 'all': return  super().print_angle(sel=sel) + hms_str
         else: return super().print_angle(sel=sel)
+
+    def decformat(self,unit: str) -> float:
+        if unit == 'deg':
+            return super().decformat()    
+        elif unit == 'hms':
+            sign = Angles.strsign[self.hms[0]]
+            ang = self.hms[1]
+            return Angles.decimal(ang)*sign
 
     def __add__(self, angle):
         """Function to sum two angles
@@ -432,12 +465,51 @@ class HAngles(Angles):
         :rtype: HAngles
         """
         return HAngles(self.rad*val,'rad',lim=self.lim)
+    
+    def __neg__(self):
+        return self * -1
+
 
 
 # defining some angles
 RIGHT = Angles(90.,'deg')
 FLAT = Angles(180.,'deg')
-        
+
+class ArrAngle(HAngles):
+    def __init__(self, arrang: np.ndarray | list | None, unit: str | None = None, lim: int = 360) -> None:
+        if arrang is None or len(unit) == 0:
+            self.deg = [] 
+            self.rad = []
+            self.hms = [] 
+            self.lim = lim
+        else:
+            allvalues = np.array([HAngles(ang,unit=unit,lim=lim) for ang in arrang])
+
+            self.deg = np.array([ Angles.decimal(val.deg[1])*Angles.strsign[val.deg[0]] for val in allvalues]) 
+            self.rad = np.array([ val.rad for val in allvalues])
+            self.hms = np.array([ Angles.decimal(val.hms[1])*Angles.strsign[val.hms[0]] for val in allvalues]) 
+            self.lim = lim
+
+    def __add__(self, arrangle):
+        sumangle = self.rad + arrangle.rad
+        return ArrAngle(sumangle,'rad',lim=self.lim)
+    
+    def __sub__(self, arrangle):
+        sumangle = self.rad - arrangle.rad
+        return ArrAngle(sumangle,'rad',lim=self.lim)
+    
+    def __mul__(self, val: float | int):
+        mulangle = ArrAngle(None,'')
+        mulangle.deg = self.deg * val        
+        mulangle.rad = self.rad * val        
+        mulangle.hms = self.hms * val        
+        mulangle.lim = self.lim
+        return mulangle
+
+    def __neg__(self):
+        return self * -1        
+
+
 
 if __name__ == "__main__":
 
