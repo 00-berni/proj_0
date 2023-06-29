@@ -1,10 +1,10 @@
 import numpy as np
-from visibility.angles import Angles, HAngles, ArrAngle
+from visibility.Angles import Angles, HAngles
 
 
 class Equatorial():
 
-    def __init__(self, alpha: HAngles | float | list, delta: HAngles | float | list) -> None:
+    def __init__(self, alpha: HAngles | float | list | None, delta: HAngles | float | list | None) -> None:
         if type(alpha) != HAngles:
             alpha = HAngles(alpha,'hms')
         if type(delta) != HAngles:

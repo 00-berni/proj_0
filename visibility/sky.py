@@ -1,8 +1,9 @@
 import numpy as np
 from visibility.stuff import get_data, interpole_three
-from visibility.angles import Angles, HAngles, ArrAngle
+from visibility.Angles import Angles, HAngles, ArrAngle
 from visibility.coor import Equatorial, GeoPos
-from visibility.Time import Date, julian_day, local_ST
+from visibility.Time.Tclasses import * 
+from visibility.Time.dates import julian_day, local_ST, mean_Green_HA
 
 
 class StarObj():
@@ -107,6 +108,7 @@ def std_atm(height: float) -> tuple[float,float]:
     h,T,p = get_data(filename)
     if height in h:
         idx = np.where(height == h)[0]
+        if len(idx) == 1: idx = idx[0]
         temp = T[idx]
         pres = p[idx]
     else:
@@ -114,45 +116,171 @@ def std_atm(height: float) -> tuple[float,float]:
         pres = interpole_three(p,height,h)
     return temp, pres
 
-def refraction_corr(alt: Angles | ArrAngle, height: float):
-    rcorr = 1.02/np.tan( Angles.deg_to_rad(alt.deg + 10.3/(alt.deg + 5.11)) )        
+def refraction_corr(alt: Angles | ArrAngle, height: float, alt0: bool = False) -> HAngles:
+    if alt0:
+        a,b,c =  1, 7.31, 4.4
+        cor90 = 1.3515e-3
+    else:
+        a,b,c =  1.02, 10.3, 5.11
+        cor90 = 1.9279e-3
+    rcorr = a/np.tan( Angles.deg_to_rad(alt.deg + b/(alt.deg + c)) )        
     if height != 0.:
         T, P = std_atm(height)
         T0, P0 = std_atm(0.)
         rcorr *= P/P0 * T0/T 
     if type(alt) == Angles:
         if alt.deg == 90:
-            rcorr += 0.0019279
-        rcorr = Angles(rcorr/60,'deg')
+            rcorr += cor90
+        rcorr = Angles(rcorr/60,'deg',lim=90)
     elif type(alt) == ArrAngle:
         idx = np.where(alt.deg == 90)[0]
         if len(idx) != 0:
-            rcorr[idx] += 0.0019279
-        rcorr = ArrAngle(rcorr/60,'deg')
+            rcorr[idx] += cor90
+        rcorr = ArrAngle(rcorr/60,'deg',lim=90)
+    if alt0: rcorr = -rcorr
     return rcorr
 
 
-def trajectory(date: Date, obs_pos: GeoPos, obj: StarObj, numpoint: int = 1000) -> ArrAngle:
+def compute_alt(date: Date, obs_pos: GeoPos, obj: StarObj) -> HAngles:
     date = date.copy()
-    date.time.val += np.linspace(0,24,numpoint)*3600 
     
     lat = obs_pos.lat
     lon = obs_pos.lon
     height = obs_pos.h
 
-    ra, dec = obj.coor_in_date(date)
-    print(HAngles(ra.hms[0],'hms').str_angle('hms'))
-    # ra = obj.coor.alpha
-    # dec = obj.coor.delta
-    # print(obj.coor.alpha.str_angle('hms'))
-    
+    _, dec = obj.coor_in_date(date)
+       
     HA = obj.lha(date,lon)
 
     phi = lat.rad
     delta = dec.rad
 
     alt = np.arcsin( np.sin(phi)*np.sin(delta) + np.cos(phi)*np.cos(delta) * np.cos(HA.rad)  )
+    if type(alt) == np.ndarray:
+        alt = ArrAngle(alt,'rad',lim=90)
+    else:
+        alt = Angles(alt,'rad',lim=90)
+    return alt + refraction_corr(alt, height)
 
-    alt = ArrAngle(alt,'rad',lim=90)
-    alt = alt + refraction_corr(alt, height)
+
+
+def trajectory(date: Date, obs_pos: GeoPos, obj: StarObj, numpoint: int = 1000) -> ArrAngle:
+    date = date.copy()
+    date.time.val += np.linspace(0,24,numpoint)*3600 
+
+    alt = compute_alt(date,obs_pos,obj)
+
+    # alt = ArrAngle(alt,'rad',lim=90)
     return alt, date.time.hour()
+
+
+
+def tran_ris_set(date: Date, obs_pos: GeoPos, obj: StarObj, results: bool = False, iter: int = 3) -> Time:
+        date = date.copy()
+        lon = obs_pos.lon
+        lat = obs_pos.lat
+        h0 = refraction_corr(Angles(0.,'deg',lim=90),obs_pos.h, alt0=True)
+
+        tmpdate = Date(date.date)
+        Dt = time_correction(tmpdate.date[0])
+        GHA = mean_Green_HA(tmpdate)
+        tmpdate.time.tytime = 'TD'
+        day = tmpdate.date[-1]
+        a2, d2 = precession_corr(tmpdate,obj)
+        tmpdate.date[-1] = day - 1
+        a1, d1 = precession_corr(tmpdate,obj)
+        tmpdate.date[-1] = day + 1
+        a3, d3 = precession_corr(tmpdate,obj)
+        del tmpdate
+
+        cosH0 = (np.sin(h0.rad) - np.sin(lat.rad)*np.sin(d2.rad)) / (np.cos(lat.rad)*np.cos(d2.rad))
+        
+        # transit
+        mt = (a2 + lon - GHA).deg / 360        
+        for k in range(iter):
+            if abs(mt) > 1:
+                mt -= np.sign(mt)
+            if mt < 0:
+                mt += 1
+            LST = GHA.deg + 360.985647*mt
+            if LST > 360:
+                LST -= 360*(LST//360)
+            LST = HAngles(LST,'deg')
+            n = mt + Dt/86400
+            a = interpole_three([a1.deg,a2.deg,a3.deg],n+day,[day-1,day,day+1])
+            a = HAngles(a,'deg')
+            H = LST - lon - a
+            Dmt = - H.deg/360
+            mt += Dmt
+            if abs(mt) > 1:
+                mt -= np.sign(mt)
+            if mt < 0:
+                mt += 1
+        time = date.time
+        if mt*24 < time.hour():
+            mt += 1
+        m = Time(mt*86400)
+
+        if results:
+            print()
+            transit = Date(date.date,m,epoch=date.epoch)
+
+            if transit.time.val > 86400:
+                days = transit.time.val // 86400
+                transit.date[-1] += days
+                transit.time.val -= days * 86400
+            elif transit.time.val < time.val:
+                transit.date[-1] += 1
+            print('transit:\t' + transit.str_date())
+
+        # rising and setting
+        if abs(cosH0) <= 1:
+            H0 = HAngles(np.arccos(cosH0),'rad',lim=180)
+            mr = mt - H0.deg/360
+            ms = mt + H0.deg/360
+            m = np.array([mr,ms])
+            for k in range(iter):
+                LST = []
+                for i in range(2):
+                    if abs(m[i]) > 1:
+                        m[i] -= np.sign(m[i])
+                    if m[i] < 0:
+                        m[i] += 1
+                    LST += [GHA.deg + 360.985647*m[i]]
+                    if LST[i] > 360:
+                        LST[i] -= 360*(LST[i]//360)
+                LST = HAngles(np.array(LST),'deg')
+                n = m + Dt/86400
+                a = np.array([interpole_three([a1.deg,a2.deg,a3.deg],ni+day,[day-1,day,day+1]) for ni in n])
+                a = HAngles(a,'deg')
+                d = np.array([interpole_three([d1.deg,d2.deg,d3.deg],ni+day,[day-1,day,day+1]) for ni in n])
+                d = HAngles(d,'deg',lim=90) 
+                H = LST - lon - a
+                h = np.arcsin(np.sin(lat.rad)*np.sin(d.rad) + np.cos(lat.rad)*np.cos(d.rad)*np.cos(H.rad))
+                h = Angles(h,'rad',lim=90)
+                Dm = (h-h0).deg / (360 * (np.cos(d.rad)*np.cos(lat.rad)*np.sin(H.rad)))
+                m += Dm
+                for i in range(2):
+                    if abs(m[i]) > 1:
+                        m[i] -= np.sign(m[i])
+                    if m[i] < 0:
+                        m[i] += 1
+            m = Time(m*86400)
+            m.val = np.where(m.hour() < time.hour(), m.val + 86400, m.val)
+            if results:
+                mr, ms = m.val
+                rising  = Date(date.date,Time(mr),epoch=date.epoch)
+                setting = Date(date.date,Time(ms),epoch=date.epoch)
+
+                event = [rising,setting]
+                names = ['rising ','setting']
+                for i in range(2):
+                    if event[i].time.val > 86400:
+                        days = event[i].time.val // 86400
+                        event[i].date[-1] += days
+                        event[i].time.val -= days * 86400
+                    elif event[i].time.val < time.val:
+                        event[i].date[-1] += 1
+                    print(names[i] + ':\t' + event[i].str_date())
+            m.val = np.append(mt*86400,m.val)
+        return m

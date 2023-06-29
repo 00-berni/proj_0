@@ -191,7 +191,7 @@ class Angles():
             angle = Angles(angle,'deg',self.lim)
         # check for edges
         if self.lim != angle.lim:
-            print('\n!warning: you are summing angles with different limits!\nThe limit of the sum is taken equal to that of ang1\n')
+            print(f'\n!warning: you are summing angles with different limits: {self.lim} and {angle.lim}!\nThe limit of the sum is taken equal to that of ang1\n')
         # computing the sum in rad
         sumrad = self.rad + angle.rad
         return Angles(ang=sumrad,unit='rad',lim=self.lim)
@@ -208,7 +208,7 @@ class Angles():
         if type(angle) == float or type(angle) == int:
             angle = Angles(angle,'deg',self.lim)
         if self.lim != angle.lim:
-            print('\n!warning: you are summing angles with different limits!\nThe limit of the sum is taken equal to that of ang1\n')
+            print(f'\n!warning: you are subtracting angles with different limits: {self.lim} and {angle.lim}!\nThe limit of the sum is taken equal to that of ang1\n')
         subrad = self.rad - angle.rad
         return Angles(ang=subrad,unit='rad',lim=self.lim)
 
@@ -431,7 +431,7 @@ class HAngles(Angles):
             angle = HAngles(angle,'deg',self.lim)
         # check for edges
         if self.lim != angle.lim:
-            print('-> Warning: you are summing angles with different limits!\nThe limit of the sum is taken equal to that of ang1\n')
+            print('-> Warning: you are summing angles with different limits: {self.lim} and {angle.lim}!\nThe limit of the sum is taken equal to that of ang1\n')
         # computing the sum
         sumrad = self.rad + angle.rad
         return HAngles(ang=sumrad,unit='rad',lim=self.lim)
@@ -449,7 +449,7 @@ class HAngles(Angles):
             angle = HAngles(angle,'deg',self.lim)
         # check for edges
         if self.lim != angle.lim:
-            print('-> Warning: you are summing angles with different limits!\nThe limit of the sum is taken equal to that of ang1\n')
+            print(f'-> Warning: you are subtracting angles with different limits: {self.lim} and {angle.lim}!\nThe limit of the sum is taken equal to that of ang1\n')
         # computing the subtaction
         subrad = self.rad - angle.rad
         return HAngles(ang=subrad,unit='rad',lim=self.lim)
