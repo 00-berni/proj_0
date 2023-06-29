@@ -4,6 +4,12 @@ import numpy as np
 
 TEST_DIR = ph.dirname(ph.realpath(__file__))
 
+def import_pack():
+    PROJECT_DIR = ph.split(TEST_DIR)[0]
+    import sys
+    sys.path.append(PROJECT_DIR)
+
+
 SEP = lambda obj : '------' + obj + '------\n'
 
 def sep_line():
