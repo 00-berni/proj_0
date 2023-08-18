@@ -34,6 +34,11 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: StarObj, test: bool = False,s
             a1, d1 = precession_corr(tmpdate,obj)
             tmpdate.date[-1] = day + 1
             a3, d3 = precession_corr(tmpdate,obj)
+            if stat:
+                print(Equatorial(a1,d1).print_values())
+                print(Equatorial(a2,d2).print_values())
+                print(Equatorial(a3,d3).print_values())
+                print()
         del tmpdate
 
         cosH0 = (np.sin(h0.rad) - np.sin(lat.rad)*np.sin(d2.rad)) / (np.cos(lat.rad)*np.cos(d2.rad))
@@ -122,7 +127,7 @@ if __name__ == '__main__':
     starting_test('TEST RISING, SETTING, TRANSIT')
     try:
         obj = nullobj()
-        date = Date([1988,3,20])
+        date = Date([2023,6,30],Time([15,57,20]))
         obs = GeoPos(['+',[71,5,0]],['+',[42,20,0]],0)
         m = tran_ris_set(date,obs,obj,test=True)
         # print('\ntransit:\t'+Time(m[0]).str_time())

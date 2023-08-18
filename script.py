@@ -45,7 +45,7 @@ if __name__ == '__main__':
     alt, dayrange = trajectory(date,obs,obj,Npnt) 
     m = tran_ris_set(date,obs,obj,True)
     event = Date(date.date,m)
-    ealt = compute_alt(event,obs,obj)
+    ealt = compute_alt(event,obs,obj,True)
 
 
     hour = date.time.hour() 
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     alt, dayrange = trajectory(date,obs,obj,Npnt)
     m = tran_ris_set(date,obs,obj,True)
     event = Date(date.date,m)
-    ealt = compute_alt(event,obs,obj)
+    ealt = compute_alt(event,obs,obj,True)
 
 
     hour = date.time.hour() 

@@ -124,14 +124,26 @@ class Time():
         return str_list
             
     def __add__(self, time):
-        sumtime = self.val + time.val
+        if isinstance(time,(float,int,np.ndarray)):
+            sumtime = self.val + time
+        else:
+            if self.tytime != time.tytime:
+                time = time.change_time_type(self.tytime,'Time')
+            sumtime = self.val + time.val
         return Time(sumtime,self.tytime)
     
     def __sub__(self, time):
-        subtime = self.val - time.val
+        if isinstance(time,(float,int,np.ndarray)):
+            subtime = self.val - time
+        else:
+            if self.tytime != time.tytime:
+                time = time.change_time_type(self.tytime,'Time')
+            subtime = self.val - time.val
         return Time(subtime,self.tytime)
               
-
+    def __mul__(self,val):
+        time = time.val * val
+        return Time(time,timetype=self.tytime)
 
 class Date():
 
@@ -348,14 +360,28 @@ class Date():
                     return str_list
 
     def __add__(self,day):
-        if isinstance(day,(float,int)):
+        if isinstance(day,(float,int,np.ndarray)):
             jd = self.jd + day
             return Date(jd=jd,timetype=self.time.tytime,calendar=self.calendar,epoch=self.epoch)
+        else:
+            if type(day) == Date:
+                day = day.time.copy()
+            sumdate = self.time + day
+            return Date(self.date,sumdate,calendar=self.calendar,epoch=self.epoch) 
 
     def __sub__(self,day):
-        if isinstance(day,(float,int)):
+        if isinstance(day,(float,int,np.ndarray)):
             jd = self.jd - day
             return Date(jd=jd,timetype=self.time.tytime,calendar=self.calendar,epoch=self.epoch)
+        else:
+            if type(day) == Date:
+                day = day.time.copy()
+            subdate = self.time - day
+            return Date(self.date,subdate,calendar=self.calendar,epoch=self.epoch) 
+
+    def __mul__(self,val):
+        jd = self.jd*val
+        return Date(jd=jd,timetype=self.time.tytime,calendar=self.calendar,epoch=self.epoch)
 
 if __name__ == '__main__':
     print()
