@@ -1,51 +1,98 @@
-# Visibility
 
-## Table of Contents
+# VISIBILITY OF A STAR
 
-1. [Structure of Project Folder](#structure-of-project-folder)
-2. [Task](#task)
+**Table of Contents**<a id='toc0_'></a> 
 
----
+- [**Description of the Project**](#toc1_)
+- [**Project tree**](#toc2_)
+    - [**Makefile**](#toc2_1_)
 
-## Structure of Project Folder
-
-- **_./_**
-  - **`README.md`**
-    File to summerise the aim of the script and the structure of the project
-  - **`requirements.txt`**
-    List of required packages of Python 3
-  - **`Makefile`**
-  - **_notebook/_**
-    - **`notebook.ipynb`**
-      Notebook used to write the code
-  - **_script/_**
-    - **`script.py`**
-      The script for the visibility project
-    - **`functions.py`**
-      File with my own functions, implemented for the code
-  - **_tests/_**
-    - **`test01.py`**
 
 ---
 
-## Task
+## <a id='toc1_'></a>[Description of the Project](#toc0_)
 
-**Input**
+This project is an university exercise. 
 
-- Coordinates (alpha, delta) of the object
-- Coordinates (long, lat, alt, zone time) of obs position on the Earth 
-- The time of the obs [YY, MM, DD, hh, mm, ss.ss]
+The `visibility` directory is the python package of functions for the visibility of a star: set a place from which to observe and the date of the observation, it is possible to compute if a target object is visible or not. To have more details see the section about [<u>the script</u>](#toc2_4_).
 
-**Output**
+In addition to this package (that is the aim of the exercise), the project directory contains:
 
-- Coordinates (HA, zenit) of the object
-- Coordinates (HA, zenit) of the Sun
-- Coordinates (HA, zenit) of the Moon
-- Airmass
+- a jupiter notebook to store and explain in details every single step of the implementation 
+- 
 
-The visibility plot
 
-## References
 
- 1. _Explanatory supplement to the Astronomical almanac_
- 2. _Textbook on Spherical Astronomy_
+## <a id='toc2_'></a>[Project tree](#toc0_)
+
+- [`README.md`](README.md) : informations about the project 
+
+- [`README.txt`](README.txt) : same file as this one in `.txt`
+
+- [`LICENCE.md`](LICENCE.md) : the free licence
+
+- [`Makefile`](Makefile) : compilable file
+
+- [`requirements.txt`](requirements.txt) : require packages
+
+- [`script.py`](script.py) : the script
+
+- [***visibility/***](visibility) - the package
+
+    - [`__init__.py`](visibility/__init__.py) : script
+
+    - [`Angles.py`](visibility/Angles.py) : function script
+
+    - [`coor.py`](visibility/coor.py) : function script
+
+    - [`sky.py`](visibility/sky.py) : function script
+    
+    - [`stuff.py`](visibility/stuff.py) : function script
+
+    - [***Time/***](visibility/Time) - 
+    
+        - [`__init__.py`](visibility/Time/__init__.py) : script
+
+        - [`dates.py`](visibility/Time/dates.py) : 
+
+        - [`Tclasses.py`](visibility/Time/Tclasses.py) :
+
+- [***data/***](data) - folder for data
+
+    - [`atm_data.csv`](data/atm_data.csv) : 
+
+    - [`dT_data.csv`](data/dT_data.csv) :
+
+    - [`moon1_data.csv`](data/moon1_data.csv) : 
+
+    - [`moon1_data.csv`](data/moon1_data.csv) : 
+
+    - [`targets.csv`](data/targets.csv) :
+
+- [***notebook/***](notebook) - folder for implementation
+
+    - [`implementation_notebook.ipynb`](notebook/implementation_notebook.ipynb) : jupyter notebook
+    
+    
+- [***tests/***](tests) - tests directory
+
+
+
+### <a id='toc2_1_'></a>[Makefile](#toc0_)
+
+Use `proj_2$ make requirements` to install all the necessary packages.
+
+
+### <a id='toc2_4_'></a>[script.py](#toc0_)
+
+#### <a id='toc1_1_'></a>[Inputs](#toc0_)
+
+The script takes **3 main inputs**: 
+
+1. the **coordinates** and the **proper motion** informations of the star
+2. the **coordinates** and the **height** of the observatory location on the Earth
+3. the **date** of the observation
+
+#### <a id='toc1_2_'></a>[Outputs](#toc0_)
+
+The script returns 
