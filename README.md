@@ -4,8 +4,13 @@
 **Table of Contents**<a id='toc0_'></a> 
 
 - [**Description of the Project**](#toc1_)
+    - [**Task**](#toc1_1_)
+    - [**Quick commands**](#toc1_2_)
+    - [**Project directory overview**](#toc1_3_)
 - [**Project tree**](#toc2_)
-    - [**Makefile**](#toc2_1_)
+    - [**visibility**](#toc2_1_)
+    - [**Makefile**](#toc2_2_)
+    - [**script.py**](#toc2_3_)
 
 
 ---
@@ -128,15 +133,26 @@ The library is made up 1 package and 4 modules:
     This module implements two classes for the manipulation of angles. The class `Angles` collecs indeed the value of any angle in both degrees and radiants and it simplifies the mathematical operation between angles. The class `HAngles` is merely the same class, but it stores the value in hours, too. 
 
 - `coor.py` 
+
+    This module contains:
+    
+    - the classes to implement celestial  (such as _equatorial_, _ecliptical_ and _local_) and Earth coordinates
+    - the functions to convert one type to another type
+
 - `sky.py` 
+
+    This module collects all the functions to compute the target trajectory along the sky, the rises and the sets of it and the Sun, the distance from the Moon and the moon phase.  
+
 - `stuff.py` 
+
+    This module implements the functions to import and to interpolate data.
 
 ### <a id='toc2_2_'></a>[Makefile](#toc0_)
 
 
-### <a id='toc2_4_'></a>[script.py](#toc0_)
+### <a id='toc2_3_'></a>[script.py](#toc0_)
 
-#### <a id='toc1_1_'></a>[Inputs](#toc0_)
+#### <a id='toc2_1_'></a>[Inputs](#toc0_)
 
 The script takes **3 main inputs**: 
 
@@ -144,11 +160,11 @@ The script takes **3 main inputs**:
 2. the **coordinates** and the **height** of the observatory location on the Earth
 3. the **date** of the observation
 
-#### <a id='toc1_2_'></a>[Outputs](#toc0_)
+#### <a id='toc2_2_'></a>[Outputs](#toc0_)
 
 The script returns 
 
-## <a id='toc4_'></a>[References](#toc0_)
+## <a id='toc3_'></a>[References](#toc0_)
 
 1. <a id='1_smith'></a> P. Duffett-Smith and J. Zwart., _Practical Astronomy with your Calculator or Spreadsheet_, Cambridge University Press, 2011.
 2. <a id='2_icao'></a> _Manual of the ICAO Standard Atmosphere_, ICAO, 3rd edition, 1993.
