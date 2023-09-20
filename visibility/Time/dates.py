@@ -4,7 +4,7 @@ import numpy as np
 # import sys
 # sys.path.append(PROJECT_FOLDER)
 
-from visibility.Time.Tclasses import *
+from .Tclasses import *
 from visibility.Angles import Angles, HAngles
 
 def mean_Green_HA(date: Date) -> HAngles:
