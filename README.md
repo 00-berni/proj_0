@@ -60,7 +60,7 @@ In addition to the library (that is the aim of the exercise), the project direct
 
 - [***data/***](data) - data directory
 
-    - [`atm_data.csv`](data/atm_data.csv) : table of standard atmospheric parameters [[1]](#1_smith)
+    - [`atm_data.csv`](data/atm_data.csv) : table of standard atmospheric parameters [[1]](#2_icao)
 
     - [`dT_data.csv`](data/dT_data.csv) : table of $TD - UT$ measures in year range $[1620,1998]$ [[3]](#3_meus)
 
