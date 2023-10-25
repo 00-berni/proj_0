@@ -69,11 +69,12 @@ def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), deli
         if valtype == 'ang':
             return [data_val[0], [float(val) for val in data_val[1:].split(sep)]]
         elif valtype == 'time':
-            return [float(val) for val in data_val[1:].split(sep)]
+            return [float(val) for val in data_val.split(sep)]
         else: raise Exception(f'Error in `valtype`! `{valtype}` is not allowed, only `ang` or `time`')
 
+    if type(sel) == int: sel = slice(sel,sel+1) 
     # extracting data
-    names, ras, decs, muas, muds, epochs, obs_names, lats, lons, hs, obs_dates, obs_times = get_data(filename, rows=sel, delimiter=delimiter)
+    names, ras, decs, muas, muds, epochs, obs_names, lats, lons, hs, obs_dates, obs_times = get_data(filename, cols=sel, delimiter=delimiter)
     
     # defining an empty list for proper motion data
     prmts = []
