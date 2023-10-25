@@ -1450,7 +1450,10 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     plt.axhline(0,xmin=0,xmax=1,linestyle='dashed',alpha=0.5,color='white',label='horizon')
     if altmu is not None:
         plt.axhline(altmu,xmin=0,xmax=1,alpha=0.5,color='pink')
-        plt.annotate('$\\mu$ = 3',(dayrange[0],altmu),(dayrange[0]-0.03,altmu+2),fontsize=10,color='white')
+        textpos = 2 
+        if (altmu+2 - alt.deg[0]) < 0: 
+            textpos = -4
+        plt.annotate('$\\mu$ = 3',(dayrange[0],altmu),(dayrange[0]-0.03,altmu+textpos),fontsize=10,color='white')
     plt.xticks(ticks.jd,labelticks)
     plt.xlabel('UT [h]')
     plt.ylabel('alt$_0$ [deg]')
@@ -1471,7 +1474,7 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     if not_vis is not None:
         namefig += '_not-vis'
     namefig += '.png'
-    plt.savefig(ph.join(RESULTS_FOLDER,namefig), format='png')
+    # plt.savefig(ph.join(RESULTS_FOLDER,namefig), format='png')
     plt.show()
 
 
