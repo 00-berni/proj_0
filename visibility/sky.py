@@ -1455,7 +1455,7 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     plt.xlabel('UT [h]')
     plt.ylabel('alt$_0$ [deg]')
     plt.grid(axis='x',linestyle='dotted',color='gray',alpha=0.7)
-    plt.legend(numpoints=1)
+    plt.legend(numpoints=1,facecolor='grey')
     location_string = obs.place_info(True)
     plt.text(0.08, 0.02, location_string, fontsize=10, transform=plt.gcf().transFigure)
     if k is not None:
@@ -1466,6 +1466,12 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
         plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
+    from .stuff import RESULTS_FOLDER, ph
+    namefig = obj.name + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name
+    if not_vis is not None:
+        namefig += '_not-vis'
+    namefig += '.png'
+    plt.savefig(ph.join(RESULTS_FOLDER,namefig), format='png')
     plt.show()
 
 
