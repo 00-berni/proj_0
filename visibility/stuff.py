@@ -6,7 +6,7 @@ PROJECT_FOLDER = ph.split(ph.dirname(ph.realpath(__file__)))[0]
 DATA_FOLDER = ph.join(PROJECT_FOLDER,'data')
 
 
-def get_data(filename: str, unpack: bool = True, delimiter: str = ',', message: bool = False) -> np.ndarray:
+def get_data(filename: str, rows: int | np.ndarray | slice = slice(None), cols: int | np.ndarray | slice = slice(None), unpack: bool = True, delimiter: str = ',', message: bool = False) -> np.ndarray:
     """Extracting data from `.csv` or `.txt` files.
 
     Function takes the name of a data file in `/data` directory and extracts data.
@@ -36,6 +36,7 @@ def get_data(filename: str, unpack: bool = True, delimiter: str = ',', message: 
     elif ext == 'txt':
         data = np.loadtxt(DATA_FILE,unpack=unpack)
     else: raise Exception(f'.{ext} is not allowed!\nOnly .txt or .csv files')
+    data = data[rows,cols]
     return data
 
 def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), delimiter: str =',', sep: str = ':') -> tuple[np.ndarray]:
@@ -64,24 +65,57 @@ def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), deli
     :return: extracted data
     :rtype: tuple[np.ndarray]
     """
+    def extract_values(data_val: str, valtype: str = 'ang') -> tuple[tuple[list[str | list[float]]]]:
+        if valtype == 'ang':
+            return [data_val[0], [float(val) for val in data_val[1:].split(sep)]]
+        elif valtype == 'time':
+            return [float(val) for val in data_val[1:].split(sep)]
+        else: raise Exception(f'Error in `valtype`! `{valtype}` is not allowed, only `ang` or `time`')
+
     # extracting data
-    names, ras, decs, muas, muds = get_data(filename,delimiter=delimiter)
+    names, ras, decs, muas, muds, epochs, obs_names, lats, lons, hs, obs_dates, obs_times = get_data(filename, rows=sel, delimiter=delimiter)
+    
     # defining an empty list for proper motion data
     prmts = []
     for i in range(len(names)):
+        # object info
         alpha = ras[i]
         delta = decs[i]
         mua = muas[i]
         mud = muds[i]
 
-        ras[i] = [alpha[0],[float(val) for val in alpha[1:].split(sep)]]
-        decs[i] = [delta[0],[float(val) for val in delta[1:].split(sep)]]
+        # from `'+hh:mm:ss.ss'` to `['+', [hh, mm, ss]]` 
+        ras[i] = extract_values(alpha)
+        # from `'+dd:pp:ss.ss'` to `['+', [dd, pp, ss]]` 
+        decs[i] = extract_values(delta)
         
         mua = float(mua) if mua != 'None' else None
         mud = float(mud) if mud != 'None' else None
         prmts += [[mua,mud]]
-    
-    return names[sel], ras[sel], decs[sel], prmts[sel]
+        
+
+        # observatory info
+        lat = lats[i]
+        lon = lons[i]
+        hs[i] = float(hs[i])
+
+        lat[0] = '+' if lat[0] == 'N' else '-'
+        lon[0] = '+' if lon[0] == 'W' else '-'
+        lats[i] = extract_values(lat)
+        lons[i] = extract_values(lon)
+
+        # observation time info
+        obs_date = obs_dates[i]
+        obs_time = obs_times[i]  
+
+        obs_dates[i] = extract_values(obs_date, valtype='time')
+        obs_times[i] = extract_values(obs_time, valtype='time')
+
+    obj  = (names, ras, decs, prmts, epochs)
+    obs  = (obs_names, lats, lons, hs)
+    date = (obs_dates, obs_times) 
+
+    return obj, obs, date
 
 def interpole_three(values: list | np.ndarray, centre: float | None = None, xvalues: list | np.ndarray | None = None, val: str | None = None, **kargs) -> float | tuple[float, dict]:
     """Computing interpolated value from three data points.
