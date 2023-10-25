@@ -4,7 +4,7 @@ import numpy as np
 
 PROJECT_FOLDER = ph.split(ph.dirname(ph.realpath(__file__)))[0]
 DATA_FOLDER = ph.join(PROJECT_FOLDER,'data')
-
+RESULTS_FOLDER = ph.join(PROJECT_FOLDER,'results')
 
 def get_data(filename: str, rows: int | np.ndarray | slice = slice(None), cols: int | np.ndarray | slice = slice(None), unpack: bool = True, delimiter: str = ',', message: bool = False) -> np.ndarray:
     """Extracting data from `.csv` or `.txt` files.
