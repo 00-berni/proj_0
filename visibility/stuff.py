@@ -99,8 +99,8 @@ def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), deli
         lon = lons[i]
         hs[i] = float(hs[i])
 
-        lat[0] = '+' if lat[0] == 'N' else '-'
-        lon[0] = '+' if lon[0] == 'W' else '-'
+        lat = '+' + lat[1:] if lat[0] == 'N' else '-' + lat[1:]
+        lon = '+' + lon[1:] if lon[0] == 'W' else '-' + lon[1:]
         lats[i] = extract_values(lat)
         lons[i] = extract_values(lon)
 
