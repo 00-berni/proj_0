@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from .stuff import get_data, interpole_three
+from .stuff import get_data, import_data, interpole_three
 from .Angles import Angles, HAngles, FLAT, ROUND
 from .coor import Equatorial, Ecliptical, GeoPos, eclipt_to_equat, equat_to_eclipt, equat_to_altaz
 from .Time.Tclasses import * 
@@ -113,9 +113,7 @@ def precession_corr(date: Date, ra0: HAngles, dec0: HAngles, epoch: str = 'J2000
 
     if epoch[0] == 'J': 
         if epoch[:5] == 'J2000': jd0 = J2000  
-        else: J2000 - (2000 - float(epoch[1:]))*365.25  
-    elif epoch[0] == 'B':
-        jd0 = B1900 if epoch == 'B1900' else B1950
+        else: jd0 = J2000 - (2000 - float(epoch[1:]))*365.25  
 
     t = (jd - jd0) / 36525
     if prmt is not None:
@@ -725,7 +723,7 @@ class Moon():
         T = (date.jd - Date.J2000) / 36525
         # print('T',T)
         L,D,M,F = self.mean_in_date(date)
-        Msun = Moon.sun_mean_anom(date)
+        Msun = Moon().sun_mean_anom(date)
         E = 1 - 2.516e-3*T - 7.4e-6*(T**2)
         # print("L'",L.deg)
         # print("D",D.deg)
@@ -837,7 +835,7 @@ class Moon():
             e = e + De
         coor = eclipt_to_equat(Ecliptical(lon,lat),e)
         # Dra, Ddec = Angles(0,'deg'),Angles(0,'deg')
-        Dra, Ddec = Sun.aberration_corr(date,coor)
+        Dra, Ddec = Sun().aberration_corr(date,coor)
         if   sel == 'ra' : return coor.alpha + Dra
         elif sel == 'dec': return coor.delta + Ddec
         elif sel == 'all': return coor.alpha + Dra, coor.delta + Ddec
@@ -967,8 +965,8 @@ class Moon():
 
 
 
-## Object
-class StarObj():
+## Target
+class Target():
     """Class to store informations about a target star
 
     This object collects the name of the target, its equatorial
@@ -1020,11 +1018,11 @@ class StarObj():
         """Function to get an exact copy of the object
 
         :return: the exact copy of the object
-        :rtype: StarObj
+        :rtype: Target
         """
         # checking if proper motion informations are present
         prmt = [self.mua, self.mud] if self.mua is not None else None
-        return StarObj(self.name,self.coor,self.epoch,prmt)
+        return Target(self.name,self.coor,self.epoch,prmt)
 
     def obj_info(self) -> None:
         """Function to print target informations
@@ -1055,10 +1053,10 @@ class StarObj():
         
         :raises Exception: only values in docstring are allowed for `sel` parameter
         """
-        starobj = self.copy()
-        if   sel == 'ra' : return starobj.coor.alpha
-        elif sel == 'dec': return starobj.coor.delta
-        elif sel == 'all': return starobj.coor.alpha, starobj.coor.delta
+        Target = self.copy()
+        if   sel == 'ra' : return Target.coor.alpha
+        elif sel == 'dec': return Target.coor.delta
+        elif sel == 'all': return Target.coor.alpha, Target.coor.delta
         else: raise Exception(f'Wrong selection!\n`{sel}` is not allowed.')
 
     def getprmt(self, sel: str = 'all') -> float | list[float] | None:
@@ -1079,18 +1077,18 @@ class StarObj():
 
         :raises Exception: only values in docstring are allowed for `sel` parameter
         """
-        starobj = self.copy()
+        Target = self.copy()
         # checking the presence of proper motion informations
         if self.mua is None and self.mud is None: return None
-        elif sel == 'mua': return starobj.mua
-        elif sel == 'mud': return starobj.mud
-        elif sel == 'all': return [starobj.mua, starobj.mud]
+        elif sel == 'mua': return Target.mua
+        elif sel == 'mud': return Target.mud
+        elif sel == 'all': return [Target.mua, Target.mud]
         else: raise Exception(f'Wrong selection!\n`{sel}` is not allowed.')
 
     def coor_in_date(self, date: Date, sel: str = 'all') -> HAngles | tuple[HAngles, HAngles]:
         """Function to extract equatorial coordinates of the target at a precise date
 
-        Coordinates of `StarObj` class are referred to the 
+        Coordinates of `Target` class are referred to the 
         stored standard epoch. This function computes the 
         coordinates for an arbitrary epoch from `self.epoch`. 
 
@@ -1121,7 +1119,8 @@ class StarObj():
         ra, dec  = precession_corr(date,ra,dec,epoch,prmt)
         Dlon, De = nutation_corr(date)
         e = De + mean_obliquity(date)
-        aberr = Sun.aberration_corr(date,Equatorial(ra,dec),sel)
+        
+        aberr = Sun().aberration_corr(date,Equatorial(ra,dec),sel)
         # condition for right ascension only
         if sel == 'ra':
             Dra = Dlon*(np.cos(e.rad)+np.sin(e.rad)*np.tan(dec.rad)) - De*(np.cos(ra.rad)*np.tan(dec.rad))
@@ -1164,7 +1163,7 @@ class StarObj():
 
 
 
-def compute_alt(date: Date, obs_pos: GeoPos, obj: StarObj, refcor: bool = False) -> Angles:
+def compute_alt(date: Date, obs_pos: GeoPos, obj: Target, refcor: bool = False) -> Angles:
     """Computing the altitude of a target star
 
     Function computes corrections in r.a. and dec. due to precession and nutation.
@@ -1177,7 +1176,7 @@ def compute_alt(date: Date, obs_pos: GeoPos, obj: StarObj, refcor: bool = False)
     :param obs_pos: observatory location 
     :type obs_pos: GeoPos
     :param obj: target object
-    :type obj: StarObj
+    :type obj: Target
     :param refcor: if `True` apparent altitude is returned, defaults to `False`
     :type refcor: bool, optional
     
@@ -1205,7 +1204,7 @@ def compute_alt(date: Date, obs_pos: GeoPos, obj: StarObj, refcor: bool = False)
     return alt 
 
 
-def trajectory(date: Date, obs_pos: GeoPos, obj: StarObj, numpoint: int = 1000) -> tuple[Angles, np.ndarray]:
+def trajectory(date: Date, obs_pos: GeoPos, obj: Target, numpoint: int = 1000) -> tuple[Angles, np.ndarray]:
     """Function to trace the trajectory of a star during a day
 
     Function returns the computed apparent altitudes and the corrispondent 
@@ -1217,7 +1216,7 @@ def trajectory(date: Date, obs_pos: GeoPos, obj: StarObj, numpoint: int = 1000) 
     :param obs_pos: observatory location 
     :type obs_pos: GeoPos
     :param obj: target object
-    :type obj: StarObj
+    :type obj: Target
     :param numpoint: length of the arrays, defaults to `1000`
     :type numpoint: int, optional
 
@@ -1234,7 +1233,7 @@ def trajectory(date: Date, obs_pos: GeoPos, obj: StarObj, numpoint: int = 1000) 
 
 
 
-def tran_ris_set(date: Date, obs_pos: GeoPos, obj: StarObj, results: bool = False, iter: int = 3) -> Time | list[Time | bool]:
+def tran_ris_set(date: Date, obs_pos: GeoPos, obj: Target, results: bool = False, iter: int = 3) -> Time | list[Time | bool]:
     """Computing the time of transit, rising and setting
 
     Firsly, function computes the time of the transit and checks the presence of
@@ -1248,7 +1247,7 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: StarObj, results: bool = Fals
     :param obs_pos: observatory location
     :type obs_pos: GeoPos
     :param obj: target star
-    :type obj: StarObj
+    :type obj: Target
     :param results: if `True` results are printed, defaults to `False`
     :type results: bool, optional
     :param iter: number of iterations, defaults to `3`
@@ -1378,7 +1377,7 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: StarObj, results: bool = Fals
         rs = False if cosH0 > 1 else True
         m = [m,rs]
         if results:
-            name = obj.name if obj.name != '' else 'Object'
+            name = obj.name if obj.name != '' else 'Target'
             if rs:
                 print(name + ' is circumpolar')
             else:
@@ -1386,7 +1385,7 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: StarObj, results: bool = Fals
     return m
 
 
-def visibility_plot(date: Date, obj: StarObj, obs: GeoPos, SUN: Sun, MOON: Moon, m: Time | list, tw: Time | bool, k: float, dist: float | None, altmu: float) -> None:
+def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, m: Time | list, tw: Time | bool, k: float | None = None, dist: float | None = None, altmu: float | None = None, not_vis: str | None = None) -> None:
     ## Target
     alt, dayrange = trajectory(date,obs,obj)
     if type(m) == list:
@@ -1449,8 +1448,9 @@ def visibility_plot(date: Date, obj: StarObj, obs: GeoPos, SUN: Sun, MOON: Moon,
     labelticks = np.round(ticks.time.hour(),0).astype(int)
     labelticks = np.where(labelticks >= 24, labelticks-24, labelticks)
     plt.axhline(0,xmin=0,xmax=1,linestyle='dashed',alpha=0.5,color='white',label='horizon')
-    plt.axhline(altmu,xmin=0,xmax=1,alpha=0.5,color='pink')
-    plt.annotate('$\\mu$ = 3',(dayrange[0],altmu),(dayrange[0]-0.03,altmu+2),fontsize=10)
+    if altmu is not None:
+        plt.axhline(altmu,xmin=0,xmax=1,alpha=0.5,color='pink')
+        plt.annotate('$\\mu$ = 3',(dayrange[0],altmu),(dayrange[0]-0.03,altmu+2),fontsize=10,color='white')
     plt.xticks(ticks.jd,labelticks)
     plt.xlabel('UT [h]')
     plt.ylabel('alt$_0$ [deg]')
@@ -1458,22 +1458,27 @@ def visibility_plot(date: Date, obj: StarObj, obs: GeoPos, SUN: Sun, MOON: Moon,
     plt.legend(numpoints=1)
     location_string = obs.place_info(True)
     plt.text(0.08, 0.02, location_string, fontsize=10, transform=plt.gcf().transFigure)
-    info_str = f'Moon ill. frac.: {k*100:.2f} %'
-    if dist is not None:
-        info_str += f'\nMin dist. from Moon: {dist:.3f} deg'
-    plt.text(0.7, 0.02, info_str, fontsize=10, transform=plt.gcf().transFigure)
+    if k is not None:
+        info_str = f'Moon ill. frac.: {k*100:.2f} %'
+        if dist is not None:
+            info_str += f'\nMin dist. from Moon: {dist:.3f} deg'
+        plt.text(0.7, 0.02, info_str, fontsize=10, transform=plt.gcf().transFigure)
+    if not_vis is not None:
+        props = dict(boxstyle='round', facecolor='red', alpha=0.8)
+        plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
     plt.show()
 
 
 
-def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpoint: int = 300, display_plots: bool = True) -> None | tuple[list[float], float]:
+def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoint: int = 300, display_plots: bool = True) -> None | tuple[list[float], float]:
     SEP = '-'*10 + '\n'
     date = date.copy()
     edges = np.array([date.time.val,date.time.val+Time.DAYSEC])
-    name = obj.name if obj.name != '' else 'Object'
-    print( '\n' + SEP + 'Visibility of target on ' + date.print_date() + ' ==> ' + date.ut_to_local('str') + '\nat ' + obs.place_info(True))
+    name = obj.name if obj.name != '' else 'Target'
+    print('\n' + SEP + 'Visibility of target on ' + date.print_date() + ' ==> ' + date.ut_to_local('str') + '\nat ' + obs.place_info(True))
     print()
     obj.obj_info()
+    
     m = tran_ris_set(date,obs,obj,True)
     SUN = Sun()
     print('\n * * SUN * *')
@@ -1482,7 +1487,11 @@ def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpo
     # checking the Sun
     if type(tw) == bool:
         if tw:
-            print('Object is not visible!')
+            if display_plots:
+                MOON = Moon()
+                not_vis = 'Target is not visible'
+                visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)
+            print('\nTarget is not visible!')
             return None
         else:
             window = np.copy([edges])
@@ -1496,7 +1505,11 @@ def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpo
     # checking the object
     if type(m) == list:
         if not m[1]:
-            print('Object is not visible!')
+            if display_plots:
+                MOON = Moon()
+                not_vis = 'Target is under horizon'
+                visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)
+            print('\nTarget is not visible!')
             return None
     else:
         rise, set = m.val[1:]
@@ -1512,7 +1525,11 @@ def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpo
                 # print('cnt',tmpcnt)
                 # newwindow = np.delete(newwindow,i,0)
                 if tmpcnt == len(window.shape):
-                    print('Object is not visible!')
+                    if display_plots:
+                            MOON = Moon()
+                            not_vis = 'Target is not visible'
+                            visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)
+                    print('\nTarget is not visible!')
                     return None
             else:
                 if (rise > set):
@@ -1555,7 +1572,7 @@ def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpo
         k = k.sum()/len(k)
         if k > 0.98:
             print('> Full Moon')
-        print(f"Illuminated fraction of Moon's disk: {k*100:.2f} %")
+        print(f"\nIlluminated fraction of Moon's disk: {k*100:.2f} %")
         moonra, moondec = MOON.equat_coor(dates)
         lst = local_ST(dates,lon,True)
         lha = lst - moonra
@@ -1573,7 +1590,10 @@ def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpo
         if len(idx) == 0:
             tmpcnt += 1
             if tmpcnt == window.shape[0]:
-                print(f"Object is behind Moon\nIt is not visible!")
+                if display_plots:
+                        not_vis = 'Target behind Moon'
+                        visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)                 
+                print(f"Target is behind Moon\nIt is not visible!")
                 return None
         else:
             start = dates.jd[idx[0]]
@@ -1592,3 +1612,23 @@ def visibility(date: Date, obj: StarObj, obs: GeoPos, airmass: float = 3., numpo
     if display_plots:
         visibility_plot(date,obj,obs,SUN,MOON,m,tw,k,min(dist),altmu)
     return results, hvis
+
+def initialize_data(file_name: str, sel: int | np.ndarray | slice = slice(None)):
+    obj, obs, odate = import_data(file_name, sel)
+    
+    # objects
+    name, ra, dec, prmt, epoch = obj
+    obj = [ Target(name[i],[ra[i],dec[i]],epoch[i],prmt[i]) for i in range(len(name))]
+    del name, ra, dec, prmt, epoch
+
+    # observatories
+    name, lat, lon, h = obs
+    obs = [GeoPos(lon[i],lat[i],h[i],name[i]) for i in range(len(name))]
+    del name, lat, lon, h
+
+    # dates
+    date, time = odate
+    odate = [Date(date=date[i],time=time[i]) for i in range(len(date))]
+    del date, time 
+
+    return obj, obs, odate
