@@ -1385,7 +1385,7 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: Target, results: bool = False
     return m
 
 
-def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, m: Time | list, tw: Time | bool, k: float | None = None, dist: float | None = None, altmu: float | None = None, not_vis: str | None = None) -> None:
+def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, m: Time | list, tw: Time | bool, k: float | None = None, dist: float | None = None, altmu: float | None = None, not_vis: str | None = None, save_fig: bool = True) -> None:
     ## Target
     alt, dayrange = trajectory(date,obs,obj)
     if type(m) == list:
@@ -1469,17 +1469,18 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
         plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
-    from .stuff import RESULTS_FOLDER, ph
-    namefig = obj.name + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name
-    if not_vis is not None:
-        namefig += '_not-vis'
-    namefig += '.png'
-    # plt.savefig(ph.join(RESULTS_FOLDER,namefig), format='png')
+    if save_fig:
+        from .stuff import RESULTS_FOLDER, ph
+        namefig = obj.name + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name
+        if not_vis is not None:
+            namefig += '_not-vis'
+        namefig += '.png'
+        plt.savefig(ph.join(RESULTS_FOLDER,namefig), format='png')
     plt.show()
 
 
 
-def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoint: int = 300, display_plots: bool = True) -> None | tuple[list[float], float]:
+def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoint: int = 300, display_plots: bool = True, save_fig: bool = True) -> None | tuple[list[float], float]:
     SEP = '-'*10 + '\n'
     date = date.copy()
     edges = np.array([date.time.val,date.time.val+Time.DAYSEC])
@@ -1499,7 +1500,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             if display_plots:
                 MOON = Moon()
                 not_vis = 'Target is not visible'
-                visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)
+                visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)
             print('\nTarget is not visible!')
             return None
         else:
@@ -1517,7 +1518,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             if display_plots:
                 MOON = Moon()
                 not_vis = 'Target is under horizon'
-                visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)
+                visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)
             print('\nTarget is not visible!')
             return None
     else:
@@ -1538,7 +1539,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                     if display_plots:
                             MOON = Moon()
                             not_vis = 'Target is not visible'
-                            visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)
+                            visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)
                     print('\nTarget is not visible!')
                     return None
             else:
@@ -1604,7 +1605,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             if tmpcnt == window.shape[0]:
                 if display_plots:
                         not_vis = 'Target behind Moon'
-                        visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis)                 
+                        visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)                 
                 print(f"Target is behind Moon\nIt is not visible!")
                 return None
         else:
@@ -1622,7 +1623,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     print('\n' + name + f" is visible for {Time.str_time(hvis,'',sep=['h ','m ','s'])[:-1]}")
     print(strresult + SEP)
     if display_plots:
-        visibility_plot(date,obj,obs,SUN,MOON,m,tw,k,min(dist),altmu)
+        visibility_plot(date,obj,obs,SUN,MOON,m,tw,k,min(dist),altmu,save_fig=save_fig)
     return results, hvis
 
 def initialize_data(file_name: str, sel: int | np.ndarray | slice = slice(None)):
