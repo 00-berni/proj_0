@@ -1397,10 +1397,10 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     hour = date.time.hour() 
     N = 25 if hour <= (int(hour)+0.5) else 26
 
-    plt.figure(figsize=[12,8])
+    plt.figure(figsize=[13,12]).subplots_adjust(left=0.09,top=0.93)
     ax = plt.axes()
     ax.set_facecolor('black')
-    plt.title(obj.name + ' on ' + date.print_date())
+    plt.title(obj.name + ' on ' + date.print_date(),fontsize=17)
 
     plt.plot(dayrange,alt.deg,'b',label=obj.name)
     plt.plot(dayrange[0],alt.deg[0],'ow',label='start')
@@ -1447,25 +1447,25 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     ticks = Date(date.date, (np.arange(0,N,1)+int(date.time.hour()))*3600,calendar=date.calendar)
     labelticks = np.round(ticks.time.hour(),0).astype(int)
     labelticks = np.where(labelticks >= 24, labelticks-24, labelticks)
-    plt.axhline(0,xmin=0,xmax=1,linestyle='dashed',alpha=0.5,color='white',label='horizon')
+    plt.axhline(0,xmin=0,xmax=1,alpha=0.5,color='white',label='horizon')
     if altmu is not None:
-        plt.axhline(altmu,xmin=0,xmax=1,alpha=0.5,color='pink')
+        plt.axhline(altmu,xmin=0,xmax=1,linestyle='dashed',alpha=0.5,color='pink')
         textpos = 2 
         if (altmu+2 - alt.deg[0]) < 0: 
             textpos = -4
         plt.annotate('$\\mu$ = 3',(dayrange[0],altmu),(dayrange[0]-0.03,altmu+textpos),fontsize=10,color='white')
     plt.xticks(ticks.jd,labelticks)
-    plt.xlabel('UT [h]')
-    plt.ylabel('alt$_0$ [deg]')
+    plt.xlabel('UT [h]',fontsize=14)
+    plt.ylabel('alt$_0$ [deg]',fontsize=14)
     plt.grid(axis='x',linestyle='dotted',color='gray',alpha=0.7)
-    plt.legend(numpoints=1,facecolor='grey')
+    plt.legend(numpoints=1,facecolor='black',labelcolor='w',bbox_to_anchor=(1, 0.7),fontsize=11).get_frame().set_alpha(None)
     location_string = obs.place_info(True)
-    plt.text(0.08, 0.02, location_string, fontsize=10, transform=plt.gcf().transFigure)
+    plt.text(0.01, 0.02, location_string, fontsize=12, transform=plt.gcf().transFigure)
     if k is not None:
         info_str = f'Moon ill. frac.: {k*100:.2f} %'
         if dist is not None:
-            info_str += f'\nMin dist. from Moon: {dist:.3f} deg'
-        plt.text(0.7, 0.02, info_str, fontsize=10, transform=plt.gcf().transFigure)
+            info_str += f'\nMin dist. from Moon: {dist:.2f} deg'
+        plt.text(0.77, 0.02, info_str, fontsize=12, transform=plt.gcf().transFigure)
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
         plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
@@ -1525,7 +1525,8 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         tmpcnt = 0
         n = window.shape[0]
         # print('n',n)
-        newwindow = np.array([[]])
+        nullarray = np.array([[None,None]])
+        newwindow = np.copy(nullarray)
         for i in range(n):
             w0, w1 = window[i]
             if (set <= w0 and rise >= w1) or (w1 <= rise < set) or (rise < set <= w0):
@@ -1548,20 +1549,22 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                         if rise < w1:
                             # print('cond 0.0.0')
                             tmpwindow = np.array([[w0,set],[rise,w1]])
-                            newwindow = np.append(newwindow,tmpwindow,axis=1-i)
+                            newwindow = np.append(newwindow,tmpwindow,axis=0)
                         else: 
                             # print('cond 0.0.1')
                             tmpwindow = np.array([[w0,min(set,w1)]])
-                            newwindow = np.append(newwindow,tmpwindow,axis=1-i)
+                            newwindow = np.append(newwindow,tmpwindow,axis=0)
                     else:
                         # print('cond 0.1')
                         tmpwindow = np.array([[max(rise,w0),w1]])
-                        newwindow = np.append(newwindow,tmpwindow,axis=1-i)
+                        newwindow = np.append(newwindow,tmpwindow,axis=0)
                 else:
                     # print('cond 1')
                     tmpwindow = np.array([[max(rise,w0),min(set,w1)]])
-                    newwindow = np.append(newwindow,tmpwindow,axis=1-i)
+                    newwindow = np.append(newwindow,tmpwindow,axis=0)
                     break
+        if nullarray in newwindow:
+            newwindow = np.array([np.delete(newwindow,np.where(newwindow == nullarray))])
         window = np.copy(newwindow)
         del tmpcnt, tmpwindow, newwindow
     lon, lat, height = obs.coor()    
