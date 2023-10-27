@@ -74,7 +74,7 @@ def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), deli
 
     if type(sel) == int: sel = slice(sel,sel+1) 
     # extracting data
-    names, ras, decs, muas, muds, epochs, obs_names, lats, lons, hs, obs_dates, obs_times = get_data(filename, cols=sel, delimiter=delimiter)
+    names, ras, decs, muas, muds, epochs, obs_names, lats, lons, hs, obs_dates = get_data(filename, cols=sel, delimiter=delimiter)
     
     # defining an empty list for proper motion data
     prmts = []
@@ -107,7 +107,6 @@ def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), deli
 
         # observation time info
         obs_date = obs_dates[i]
-        obs_time = obs_times[i]  
 
         obs_dates[i] = extract_values(obs_date, valtype='time')
 
