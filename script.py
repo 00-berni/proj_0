@@ -3,7 +3,8 @@ from visibility.sky import initialize_data, visibility
 
 if __name__ == '__main__':
     data_file = 'targets.csv'
-    sel = slice(4,None)
+    st, end = 0,1
+    sel = slice(st,end)
     targets, observatories, dates = initialize_data(data_file,sel=sel)    
 
 
