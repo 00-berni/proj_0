@@ -646,8 +646,8 @@ class Sun():
             if t < 0 : t += 24
             tt = t*3600
             mtw = rise - tt
-            if Date.julian_day(*date.date,mtw) < date.jd: mtw += secinday
-            if Date.julian_day(*date.date,mtw) > date.jd+1: mtw -= secinday
+            # if Date.julian_day(*date.date,mtw) < date.jd: mtw += secinday
+            # if Date.julian_day(*date.date,mtw) > date.jd+1: mtw -= secinday
             etw = set + tt
             # if etw < date.time.val: etw += secinday
             # if Date.julian_day(*date.date,etw) < date.jd: etw += secinday
@@ -1406,13 +1406,10 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: Target, results: bool = False
     return m
 
 
-def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, m: float | np.ndarray, tw: np.ndarray | bool, k: float | None = None, dist: float | None = None, altmu: float | None = None, not_vis: str | None = None, save_fig: bool = True) -> None:
+def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, m: float | np.ndarray, tw: np.ndarray | bool, k: float | None = None, dist: float | None = None, altmu: float | None = None, not_vis: str | None = None, save_fig: bool = True, window: np.ndarray | None = None, win_par: bool = True) -> None:
     ## Target
-    print(date.print_date())
     alt, dayrange = trajectory(date,obs,obj)
-    print(Date(jd=dayrange[0]).print_date())
     event = Date(jd=m)
-    print(event.print_date())
     # computing the corresponding apparent altitude
     ealt = compute_alt(event,obs,obj,True)    
 
@@ -1422,7 +1419,15 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     plt.figure(figsize=[13,12]).subplots_adjust(left=0.09,top=0.93)
     ax = plt.axes()
     ax.set_facecolor('black')
-    plt.title(obj.name + ' on ' + date.print_date(),fontsize=17)
+    plt.suptitle(obj.name + ' on ' + date.print_date(sel='date'),fontsize=17)
+    if window is not None and not_vis is None:
+        title = 'visible '
+        cnt = 0
+        for w in window:
+            title += 'from ' + Date(jd=w[0]).print_date() + ' to ' + Date(jd=w[1]).print_date()
+            if cnt > 1:
+                title += '\nand '
+        plt.title(title,fontsize=10)
 
     plt.plot(dayrange,alt.deg,'b',label=obj.name)
     plt.plot(dayrange[0],alt.deg[0],'ow',label='start')
@@ -1440,19 +1445,17 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     lat = obs.lat
     lha = local_ST(dates,lon,True) - ra
     altaz = equat_to_altaz(Equatorial(ra,dec),lha,lat)
-    # print('sun az',altaz.az.print_angle('deg')[0])
     sunrad = SUN.ang_diameter(dates)/2
     sunalt = altaz.alt + refraction_corr(altaz.alt,obs.h)
     if type(tw) != bool: 
         suntw = Date(jd=tw,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls)
 
-
     plt.plot(dayrange,sunalt.deg,'y',label='Sun')
     plt.plot(dayrange,sunalt.deg - sunrad.deg,'y',alpha=0.5)
     plt.plot(dayrange,sunalt.deg + sunrad.deg,'y',alpha=0.5)
     if type(tw) != bool: 
-        plt.axvline(suntw.jd[0],ymin=0,ymax=1,linestyle=(0,(5,10)),alpha=0.4,color='gold',label='twilight')
-        plt.axvline(suntw.jd[1],ymin=0,ymax=1,linestyle=(0,(5,10)),alpha=0.4,color='gold')
+        plt.axvline(suntw.jd[0],ymin=0,ymax=1,linestyle=(0,(5,10)),alpha=0.4,color='gold',label='twilight mor')
+        plt.axvline(suntw.jd[1],ymin=0,ymax=1,linestyle=(0,(5,10)),alpha=0.4,color='green',label='twilight eve')
 
     ## MOON
     ra, dec = MOON.equat_coor(dates)
@@ -1467,17 +1470,24 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     # plt.plot(dayrange,moonalt.deg + moonrad.deg,'w',alpha=0.5)
 
     ticks = Date(date.date, (np.arange(0,N,1)+int(date.time.hour()))*3600,calendar=date.calendar)
-    print(ticks.jd[0])
     labelticks = np.round(ticks.time.hour(),0).astype(int)
     labelticks = np.where(labelticks >= 24, labelticks-24, labelticks)
-    print(labelticks)
+    if labelticks[0] != 0:
+        midnight = ticks.jd[np.where(labelticks==0)[0]]
+        for mn in midnight:
+            if mn != ticks.jd[-1]:
+                plt.axvline(mn,ymin=0,ymax=1,alpha=0.4,color='white')
     plt.axhline(0,xmin=0,xmax=1,alpha=0.5,color='white',label='horizon')
     if altmu is not None:
         plt.axhline(altmu,xmin=0,xmax=1,linestyle='dashed',alpha=0.5,color='pink')
         textpos = 2 
         if (altmu+2 - alt.deg[0]) < 0: 
             textpos = -4
-        plt.annotate('$\\mu$ = 3',(dayrange[0],altmu),(dayrange[0]-0.03,altmu+textpos),fontsize=10,color='white')
+        if window is not None and win_par:
+            startpos = window.min()
+        else:
+            startpos = dayrange[0]
+        plt.annotate('$\\mu$ = 3',(startpos,altmu),(startpos-0.03,altmu+textpos),fontsize=10,color='white')
     plt.xticks(ticks.jd,labelticks)
     plt.xlabel('UT [h]',fontsize=14)
     plt.ylabel('alt$_0$ [deg]',fontsize=14)
@@ -1493,6 +1503,10 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
         plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
+    if window is not None and win_par:
+        xlims = (window.min()-1/24,window.max()+1/24)
+        plt.xlim(*xlims)
+        plt.ylim(0,max(ealt.deg[0],max(sunalt.deg),max(moonalt.deg))+20)
     if save_fig:
         from .stuff import RESULTS_FOLDER, ph
         namefig = obj.name + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name
@@ -1504,30 +1518,33 @@ def visibility_plot(date: Date, obj: Target, obs: GeoPos, SUN: Sun, MOON: Moon, 
 
 
 
-def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoint: int = 300, display_plots: bool = True, save_fig: bool = True) -> None | tuple[list[float], float]:
+def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoint: int = 300, display_plots: bool = True, save_fig: bool = True, win: bool = True) -> None | tuple[list[float], float]:
     SEP = '-'*10 + '\n'
-    
+
     date = date.copy()
     edges = np.array([date.jd,date.jd+1])
     start_point = edges[0]
     name = obj.name if obj.name != '' else 'Target'
     
-    print('\n' + SEP + 'Visibility of target on ' + date.print_date() + ' ==> ' + date.ut_to_local('str') + '\nat ' + obs.place_info(True))
-    print()
+    intro_str = '\n' + SEP + 'Visibility of target on ' + date.print_date()
+    if date.time.tytime == 'local':
+        intro_str += ' ==> ' + date.ut_to_local('str')
+    intro_str += '\nat ' + obs.place_info(True) +'\n'
+    print(intro_str)
     obj.obj_info()
 
     m = tran_ris_set(date,obs,obj,False)
     SUN = Sun()
     # print('\n * * SUN * *')
-    tw, t_tw, mtw = SUN.twilight(date,obs,results=True,add_res=True)
+    tw, t_tw, mtw = SUN.twilight(date,obs,results=False,add_res=True)
     
 
     # checking the Sun
     if type(tw) == bool:
         if tw:
+            not_vis = '\nNight never occurs'
             if display_plots:
                 MOON = Moon()
-                not_vis = 'Night never occurs'
                 start_point = Date(jd=start_point)
                 if type(m) == list:
                     m = Date(date.date,time=m[0]).jd
@@ -1547,7 +1564,10 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             if abs(start_point-tw[0]) < abs(start_point-tw[1]):
                 shift = -1
             tw[shift] += shift    
-            mtw[shift] += shift    
+            mtw[shift] += shift
+        else:
+            tw[1] -= 1
+            mtw[1] -= 1    
         start_point = mtw[1] 
         window = np.copy([tw])
         sun_str = f'\n* * SUN * *\nrising:  \t{Date(jd=mtw[0]).print_date()}\nsetting:\t{Date(jd=mtw[1]).print_date()}\n-- Twilight --\nDuration: {t_tw:.2f} h\nmorning:\t{Date(jd=tw[0]).print_date()}\nevening:\t{Date(jd=tw[1]).print_date()}'
@@ -1560,33 +1580,42 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     # checking the object
     if type(m) == list:
         if not m[1]:
+            not_vis = '\nTarget is always under horizon'
+            m = Date(date.date,time=m[0])
+            print('transit:\t'+m.print_date()+'\n')
+            print(sun_str)
             if display_plots:
                 MOON = Moon()
-                not_vis = 'Target is always under horizon'
                 start_point = Date(jd=start_point)
-                m = Date(date.date,time=m[0])
-                print('transit:\t'+m.print_date())
-                print(sun_str)
-                visibility_plot(start_point,obj,obs,SUN,MOON,m.jd,tw,not_vis=not_vis,save_fig=save_fig)
+                m = m.jd
+                win_param = np.copy(window) if win else None
+                visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
             print(not_vis+'\nTarget is not visible!')
             return None
     else:
-        rise, set = Date(date.date,time=m.val[1:]).jd
+        tran, rise, set = Date(date.date,time=m.val).jd
+        if tran > start_point+1:
+            tran -= 1
+        elif tran < start_point:
+            tran += 1
         if set > start_point+1:
             set -= 1
         if rise < start_point:
             rise += 1
             if set <= tw[1]:
                 if rise >= tw[0]:
+                    not_vis = '\nTarget is under horizon'
+                    start_point = Date(jd=start_point)
+                    print(f'transit:\t{Date(jd=tran).print_date()}')
+                    print(f'rising: \t{Date(jd=rise).print_date()}')
+                    print(f'setting:\t{Date(jd=set).print_date()}')
+                    print(sun_str)
                     if display_plots:
-                            MOON = Moon()
-                            not_vis = 'Target is under horizon'
-                            start_point = Date(jd=start_point)
-                            m = Date(date.date,time=m).jd
-                            m[1:] = np.array([rise,set])
-                            print(sun_str)
-                            visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)
-                    print('\nTarget is not visible!')
+                        MOON = Moon()
+                        m = Date(jd=np.array([tran,rise,set])).jd
+                        win_param = np.copy(window) if win else None
+                        visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
+                    print(not_vis+'\nTarget is not visible!')
                     return None
                 else:
                     window = np.array([[rise,tw[0]]])
@@ -1596,9 +1625,25 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                 else:
                     window = np.array([[tw[1],set],[rise,tw[0]]])
         else:
-            window = np.array([[max(tw[0],rise),min(tw[1],set)]])
-        
-
+            if rise >= tw[0]:
+                if set > rise or set <= tw[1]:
+                    not_vis = '\nTarget is under horizon'
+                    start_point = Date(jd=start_point)
+                    print(f'transit:\t{Date(jd=tran).print_date()}')
+                    print(f'rising: \t{Date(jd=rise).print_date()}')
+                    print(f'setting:\t{Date(jd=set).print_date()}')
+                    m = Date(jd=np.array([tran,rise,set])).jd
+                    print(sun_str)
+                    if display_plots:
+                        MOON = Moon()
+                        win_param = np.copy(window) if win else None
+                        visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
+                    print(not_vis+'\nTarget is not visible!')
+                    return None
+                else:
+                    window = np.array([[tw[1],set]])
+            else:
+                window = np.array([[max(tw[1],rise),min(tw[0],set)]])     
 
     lon, lat, height = obs.coor()    
     ra, dec = obj.coor_in_date(date)
@@ -1611,20 +1656,18 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     results = []
     strresult = ''
     for w in window:
+        if w[0] > w[1]: w = w[::-1]
         aw = np.linspace(w[0],w[1],numpoint)    
         dates = Date(jd=aw,calendar=date.calendar)
         k = MOON.ill_fract(dates,SUN.app_lon(dates),SUN.distance(dates))
         k = k.sum()/len(k)
-        if k > 0.98:
-            print('> Full Moon')
-        print(f"\nIlluminated fraction of Moon's disk: {k*100:.2f} %")
         moonra, moondec = MOON.equat_coor(dates)
         lst = local_ST(dates,lon,True)
         lha = lst - moonra
         moonalt = equat_to_altaz(Equatorial(moonra,moondec),lha,lat).alt
         del lst, lha
         r = MOON.ang_diameter(dates,moonalt).deg/2
-        r = r.sum()/len(r)
+        # r = r.sum()/len(r)
         mindist = r
 
         ra, dec = obj.coor_in_date(dates)
@@ -1635,10 +1678,21 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         if len(idx) == 0:
             tmpcnt += 1
             if tmpcnt == window.shape[0]:
+                not_vis = '\nTarget is behind Moon'
+                if type(m) == list:
+                    m = Date(date.date,m[0])
+                    print(f'transit:\t{m.print_date()}')
+                    m = m.jd
+                else:
+                    print(f'transit:\t{Date(jd=tran).print_date()}')
+                    print(f'rising: \t{Date(jd=rise).print_date()}')
+                    print(f'setting:\t{Date(jd=set).print_date()}')
+                    m = Date(jd=np.array([tran,rise,set])).jd
+                print(sun_str)
                 if display_plots:
-                        not_vis = 'Target behind Moon'
-                        visibility_plot(date,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)                 
-                print(f"Target is behind Moon\nIt is not visible!")
+                    win_param = np.copy(window) if win else None
+                    visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
+                print(not_vis+"\nIt is not visible!")
                 return None
         else:
             start = dates.jd[idx[0]]
@@ -1650,20 +1704,24 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             tmpdate = Date(jd=end,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls)
             strresult += ('To:  \t' +tmpdate.print_date()) + '\n'
             del tmpdate
-            print(f'\nMinimum distance from Moon: {min(dist):.3f} deg')
-    
-    if display_plots:
-        start_point = Date(jd=start_point)
-        print(start_point.jd)
-        if type(m) == list:
-            m = Date(date.date,m[0]).jd
-        else:
-            m = Date(date.date,m).jd
-            m[1:] = np.array([rise,set])
-        print(sun_str)
-        visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,k,min(dist),altmu,save_fig=save_fig)
+
+    if type(m) == list:
+        m = Date(date.date,m[0])
+        print(f'transit:\t{m.print_date()}')
+        m = m.jd
+    else:
+        print(f'transit:\t{Date(jd=tran).print_date()}')
+        print(f'rising: \t{Date(jd=rise).print_date()}')
+        print(f'setting:\t{Date(jd=set).print_date()}')
+        m = Date(jd=np.array([tran,rise,set])).jd
+    print(sun_str)
+    print(f"\nIlluminated fraction of Moon's disk: {k*100:.2f} %")
+    print(f'\nMinimum distance from Moon: {min(dist):.3f} deg')
     print('\n' + name + f" is visible for {Time.str_time(hvis,'',sep=['h ','m ','s'])[:-1]}")
     print(strresult + SEP)
+    if display_plots:
+        start_point = Date(jd=start_point)
+        visibility_plot(start_point,obj,obs,SUN,MOON,m,tw,k,min(dist),altmu=altmu,save_fig=save_fig,window=window,win_par=win)
     return results, hvis
 
         # tmpcnt = 0
