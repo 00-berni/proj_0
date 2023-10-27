@@ -110,11 +110,10 @@ def import_data(filename: str, sel: int | np.ndarray | slice = slice(None), deli
         obs_time = obs_times[i]  
 
         obs_dates[i] = extract_values(obs_date, valtype='time')
-        obs_times[i] = extract_values(obs_time, valtype='time')
 
     obj  = (names, ras, decs, prmts, epochs)
     obs  = (obs_names, lats, lons, hs)
-    date = (obs_dates, obs_times) 
+    date = obs_dates 
 
     return obj, obs, date
 

@@ -1032,7 +1032,7 @@ class Target():
         # checking if proper motion informations are present
         if self.mua is not None:
             print('Proper motion')
-            print(f'mu_alpha =\t{self.mua} as/yr\nmu_delta =\t{self.mud} as/yr')
+            print(f'mu_alpha =\t{self.mua} mas/yr\nmu_delta =\t{self.mud} mas/yr')
         print()
 
     def getcoor(self, sel: str = 'all') -> HAngles | tuple[HAngles]:
@@ -1640,8 +1640,8 @@ def initialize_data(file_name: str, sel: int | np.ndarray | slice = slice(None))
     del name, lat, lon, h
 
     # dates
-    date, time = odate
-    odate = [Date(date=date[i],time=time[i]) for i in range(len(date))]
-    del date, time 
+    date = odate
+    odate = [Date(date=date[i],time=Time(0.,'UT')) for i in range(len(date))]
+    del date
 
     return obj, obs, odate
