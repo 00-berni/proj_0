@@ -1451,6 +1451,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
         subtitle = 'visible '
         cnt = 0
         for w in window:
+            if w[0] > w[1]: w = w[::-1]
             subtitle += 'from ' + Date(jd=w[0],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date() + ' to ' + Date(jd=w[1],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date()
             if cnt > 1:
                 subtitle += '\nand '
@@ -1670,7 +1671,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             return None
         # Sun never rises
         else:
-            print('\nDaylight never occurs')
+            sun_str = '\nDaylight never occurs'
             window = np.copy([edges])
     else:
         # getting twilight, sunset and sunrise times in jds 
@@ -1847,12 +1848,11 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             results += [start,end]
             # updating the duration in hours
             hvis += np.diff([start,end]).sum()*Time.DAYSEC
+            # print(Date(jd=start,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls).print_date())
             # collecting information to print
-            tmpdate = Date(jd=start,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls)
-            strresult += ('From:\t' + tmpdate.print_date()) + '\n'
-            tmpdate = Date(jd=end,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls)
-            strresult += ('To:  \t' +tmpdate.print_date()) + '\n'
-            del tmpdate
+            strresult += ('From:\t' + Date(jd=start,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls).print_date()) + '\n'
+            strresult += ('To:  \t' + Date(jd=end,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls).print_date()) + '\n'
+            # print(Date(jd=end,calendar=date.calendar,timezone=date.timezone,dl_save=date.dls).print_date())
     # getting 1-D arrays
     dists = np.array(dists).flatten()
     dtime = np.array(dtime).flatten()
