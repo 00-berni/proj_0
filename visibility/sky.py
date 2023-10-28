@@ -1646,7 +1646,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     obj.obj_info()
     
     # computing trans., ris. and set. of the target
-    m = tran_ris_set(date,obs,obj,False)
+    m = tran_ris_set(date,obs,obj,True)
     # initializing Sun
     SUN = Sun()
     # computing twilights
@@ -1739,11 +1739,11 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                     return None
                 else:
                     # updating the window
-                    window = np.array([[rise,tw[0]]])
+                    window = np.array([[max(rise,tw[1]),tw[0]]])
             else:
                 if rise >= tw[0]:
                     # updating the window
-                    window = np.array([[tw[1],set]])
+                    window = np.array([[tw[1],min(set,tw[0])]])
                 else:
                     # updating the window
                     window = np.array([[tw[1],set],[rise,tw[0]]])
@@ -1766,7 +1766,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                     return None
                 else:
                     # updating the window
-                    window = np.array([[tw[1],set]])
+                    window = np.array([[tw[1],min(set,tw[0])]])
             else:
                 # updating the window
                 window = np.array([[max(tw[1],rise),min(tw[0],set)]])     
