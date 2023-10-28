@@ -1465,12 +1465,12 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     ealt = compute_alt(event,obs,obj,True)    
     # plotting all
     plt.plot(dayrange,alt.deg,'b',label=obj.name)
-    if type(m) != np.ndarray:
-        plt.plot(event.jd,ealt.deg,'vg',label='transit')
-    else:
-        plt.plot(event.jd[0],ealt.deg[0],'vg',label='transit')
-        plt.plot(event.jd[1],ealt.deg[1],'vy',label='rising')
-        plt.plot(event.jd[2],ealt.deg[2],'vr',label='setting')
+    # if type(m) != np.ndarray:
+    #     plt.plot(event.jd,ealt.deg,'vg',label='transit')
+    # else:
+    #     plt.plot(event.jd[0],ealt.deg[0],'vg',label='transit')
+    #     plt.plot(event.jd[1],ealt.deg[1],'vy',label='rising')
+    #     plt.plot(event.jd[2],ealt.deg[2],'vr',label='setting')
     
     # computing the date for each Julian Day used to sample trajectory
     dates = Date(jd=dayrange,timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar)    
