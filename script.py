@@ -6,7 +6,7 @@ if __name__ == '__main__':
     st, end = 0,None
     sel = slice(st,end)
     window = True
-    save_fig = False
+    save_fig = True
     targets, observatories, dates = initialize_data(data_file,sel=sel)    
 
 
