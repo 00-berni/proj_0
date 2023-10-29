@@ -1441,7 +1441,14 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     :type win_par: bool, optional
     """
     ## PLOT
-    plt.figure(figsize=[13,12]).subplots_adjust(left=0.09,top=0.93)
+    # factors for the figure adjustment
+    top = 0.93
+    left = 0.09
+    right = 0.9
+    # condition to adjust the image
+    if ((window is not None) and (not_vis is None)) and (window.shape[0] > 1):
+        top = 0.91
+    plt.figure(figsize=[13,12]).subplots_adjust(left=left,top=top,right=right)
     ax = plt.axes()
     ax.set_facecolor('black')
     # True title
@@ -1449,12 +1456,14 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     # condition to show the visibility window of time if any
     if window is not None and not_vis is None:
         subtitle = 'visible '
+        # counting the numer of windows
         cnt = 0
         for w in window:
+            if cnt > 0:
+                subtitle += '\nand '
             if w[0] > w[1]: w = w[::-1]
             subtitle += 'from ' + Date(jd=w[0],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date() + ' to ' + Date(jd=w[1],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date()
-            if cnt > 1:
-                subtitle += '\nand '
+            cnt += 1
         plt.title(subtitle,fontsize=10)
 
     ## Target
@@ -1577,7 +1586,11 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
                 plt.plot(dtime,dalt,'|',color='white')
                 # showing the distance value for each point
                 for i in range(len(dtime)):
-                    plt.annotate(f'{dist[i]:.1f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.01,dalt[i]-3),color='white')
+                    if dalt[i] > 0:
+                        alt_pos = -3
+                        if dalt[i]+alt_pos <= 0:
+                            alt_pos = 2
+                        plt.annotate(f'{dist[i]:.1f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.01,dalt[i]+alt_pos),color='white')
         # displaying minimum distance
         plt.text(0.77, 0.02, info_str, fontsize=12, transform=plt.gcf().transFigure)
     # case for a not-visible target
@@ -1769,8 +1782,12 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                     # updating the window
                     window = np.array([[tw[1],min(set,tw[0])]])
             else:
-                # updating the window
-                window = np.array([[max(tw[1],rise),min(tw[0],set)]])     
+                if set <= tw[1] or set >= tw[0]:
+                    # updating the window
+                    window = np.array([[max(tw[1],rise),tw[0]]])
+                else:
+                    # updating the window
+                    window = np.array([[tw[1],set],[rise,tw[0]]])                    
     # loading the coordinates of obesrvatory
     lon, lat, height = obs.coor()    
     # computing ra and dec of the target
@@ -1788,9 +1805,11 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     dists = []      # it stores the array of distances from Moon
     dtime = []      # it stores the corresponding value of time in jds
     # studying the visibility in the window
-    for w in window:
+    for i in range(window.shape[0]):
         # checking the order
-        if w[0] > w[1]: w = w[::-1]
+        if window[i,0] > window[i,1]: window[i,:] = window[i,::-1]
+        # renaming
+        w = window[i]
         # sampling the range of time
         aw = np.linspace(w[0],w[1],numpoint)    
         dates = Date(jd=aw,calendar=date.calendar)
@@ -1870,13 +1889,13 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         m = Date(jd=np.array([tran,rise,set])).jd
     print(sun_str)
     print(f"\nIlluminated fraction of Moon's disk: {k*100:.2f} %")
-    print(f'\nMinimum distance from Moon: {dist[idx]:.3f} deg at {Date(jd=dtime[idx]).print_date()}')
+    print(f'\nMinimum distance from Moon: {dists[idx]:.3f} deg at {Date(jd=dtime[idx]).print_date()}')
     # printing information about the visibility
     print('\n' + name + f" is visible for {Time.str_time(hvis,'',sep=['h ','m ','s'])[:-1]}")
     print(strresult + SEP)
     if display_plots:
         start_point = Date(jd=start_point)
-        visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,k,(dist,dtime),altmu=altmu,save_fig=save_fig,window=window,win_par=win)
+        visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,k,(dists,dtime),altmu=altmu,save_fig=save_fig,window=window,win_par=win)
     return results, hvis
 
 
