@@ -1608,7 +1608,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     # condtion to save automatically the figure
     if save_fig:
         from .stuff import RESULTS_FOLDER, ph
-        namefig = obj.name + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name
+        namefig = obj.name.replace(' ','-') + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name.replace(' ','-')
         if not_vis is not None:
             namefig += '_not-vis'
         namefig += '.png'
