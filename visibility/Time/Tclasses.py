@@ -558,7 +558,7 @@ class Date():
         :return: the string of the date
         :rtype: str
         """
-        strdate = f'{year:.0f} {Date.MONTHS[month]} {day:.0f}'
+        strdate = f'{day:.0f} {Date.MONTHS[month]} {year:.0f}'
         return strdate
 
 
