@@ -15,10 +15,10 @@ def ang_sep(coor1: Equatorial, coor2: Equatorial) -> Angles:
     z = np.sin(dec1)*np.sin(dec2) + np.cos(dec1)*np.cos(dec2)*np.cos(ra2-ra1)
     d = np.arctan(np.sqrt(1-z**2)/z)
     d = Angles(d,'rad')
-    if type(z) == np.ndarray:
-        d = d + np.where(z<0,90,0).astype(float)
-    elif z < 0: 
-        d = d + 90
+    # if type(z) == np.ndarray:
+    #     d = d + np.where(z<0,90,0).astype(float)
+    # elif z < 0: 
+    #     d = d + 90
     return d 
 
 
@@ -1590,7 +1590,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
                         alt_pos = -3
                         if dalt[i]+alt_pos <= 0:
                             alt_pos = 2
-                        plt.annotate(f'{dist[i]:.1f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.01,dalt[i]+alt_pos),color='white')
+                        plt.annotate(f'{dist[i]:.0f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.005,dalt[i]+alt_pos),color='white')
         # displaying minimum distance
         plt.text(0.77, 0.02, info_str, fontsize=12, transform=plt.gcf().transFigure)
     # case for a not-visible target
@@ -1660,7 +1660,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     obj.obj_info()
     
     # computing trans., ris. and set. of the target
-    m = tran_ris_set(date,obs,obj,True)
+    m = tran_ris_set(date,obs,obj,False)
     # initializing Sun
     SUN = Sun()
     # computing twilights
@@ -1830,8 +1830,9 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         # computing ra and dec of the target
         ra, dec = obj.coor_in_date(dates)
         # computing the angular distance between Moon and target 
-        dist = abs(ang_sep(Equatorial(ra,dec),Equatorial(moonra,moondec)).deg)
-        dist = abs(np.where(dist > 180, 360-dist, dist))
+        dist = ang_sep(Equatorial(ra,dec),Equatorial(moonra,moondec)).deg
+        dist = np.where(dist < 0, 180 + dist, dist)
+        # dist = abs(np.where(dist > 180, 360-dist, dist))
         # checking where target is visible
         idx = np.where(dist > mindist)[0]
         # target is behind Moon then it is not visible
