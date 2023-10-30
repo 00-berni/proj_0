@@ -1442,17 +1442,19 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     """
     ## PLOT
     # factors for the figure adjustment
-    top = 0.93
-    left = 0.09
-    right = 0.9
+    top = 0.92
+    left = 0.15
+    right = 0.95
     # condition to adjust the image
     if ((window is not None) and (not_vis is None)) and (window.shape[0] > 1):
-        top = 0.91
+        top = 0.9
+    if win_par or not_vis is not None:
+        left = 0.08
     plt.figure(figsize=[13,12]).subplots_adjust(left=left,top=top,right=right)
     ax = plt.axes()
     ax.set_facecolor('black')
     # True title
-    plt.suptitle(obj.name + ' on ' + truedate.print_date(sel='date'),fontsize=17)
+    plt.suptitle(obj.name + ' on ' + truedate.print_date(sel='date'),fontsize=20)
     # condition to show the visibility window of time if any
     if window is not None and not_vis is None:
         subtitle = 'visible '
@@ -1464,7 +1466,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
             if w[0] > w[1]: w = w[::-1]
             subtitle += 'from ' + Date(jd=w[0],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date() + ' to ' + Date(jd=w[1],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date()
             cnt += 1
-        plt.title(subtitle,fontsize=10)
+        plt.title(subtitle,fontsize=16)
 
     ## Target
     # computing trajectory
@@ -1552,15 +1554,16 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
             startpos = window.min()
         else:
             startpos = dayrange[0]
-        plt.annotate('$\\mu$ = 3',(startpos,altmu),(startpos-0.03,altmu+textpos),fontsize=10,color='white')
+        plt.annotate('$X$ = 3',(startpos,altmu),(startpos-0.03,altmu+textpos),fontsize=12,color='white')
 
-    plt.xticks(ticks.jd,labelticks)
-    plt.xlabel('UT [h]',fontsize=14)
-    plt.ylabel('alt$_0$ [deg]',fontsize=14)
+    plt.xticks(ticks.jd,labelticks,fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.xlabel('UT [h]',fontsize=15)
+    plt.ylabel('alt$_0$ [deg]',fontsize=15)
     plt.grid(linestyle='dotted',color='gray',alpha=0.5)
     # information about the place of the observatory
     location_string = obs.place_info(True)
-    plt.text(0.01, 0.02, location_string, fontsize=12, transform=plt.gcf().transFigure)
+    plt.text(0.01, 0.02, location_string, fontsize=14, transform=plt.gcf().transFigure)
     # condition to show the illuminated fraction of the Moon's disk
     if k is not None:
         info_str = f'Moon ill. frac.: {k*100:.2f} %'
@@ -1592,11 +1595,12 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
                             alt_pos = 2
                         plt.annotate(f'{dist[i]:.0f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.005,dalt[i]+alt_pos),color='white')
         # displaying minimum distance
-        plt.text(0.77, 0.02, info_str, fontsize=12, transform=plt.gcf().transFigure)
+        plt.text(0.7, 0.02, info_str, fontsize=14, transform=plt.gcf().transFigure)
     # case for a not-visible target
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
         plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
+    pos_leg = (-0.04, 0.8)
     # condition to plot only the visibility window
     if window is not None and win_par:
         xlims = (window.min()-1/24,window.max()+1/24)
@@ -1605,6 +1609,9 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
         max_moonalt = max(moonalt.deg)
         plt.xlim(*xlims)
         plt.ylim(0,max(max_alt,max_sunalt,max_moonalt)+20)
+        pos_leg = (0.85,0.8)
+    if not_vis is None:
+        plt.legend(numpoints=1,facecolor='black',labelcolor='w',bbox_to_anchor=pos_leg,fontsize=13).get_frame().set_alpha(None)
     # condtion to save automatically the figure
     if save_fig:
         from .stuff import RESULTS_FOLDER, ph
@@ -1613,7 +1620,6 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
             namefig += '_not-vis'
         namefig += '.png'
         plt.savefig(ph.join(RESULTS_FOLDER,namefig), format='png')
-    plt.legend(numpoints=1,facecolor='black',labelcolor='w',bbox_to_anchor=(1, 0.7),fontsize=11).get_frame().set_alpha(None)
     plt.show()
 
 
@@ -1679,7 +1685,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                     m = Date(date.date,time=m[0]).jd
                 else:
                     m = Date(date.date,time=m).jd 
-                visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig)
+                visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,win_par=False)
             print(not_vis+'\nTarget is not visible!')
             return None
         # Sun never rises
@@ -1827,6 +1833,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         # computing Moon angular size
         r = MOON.ang_diameter(dates,moonalt).deg/2
         mindist = r
+        print(max(r))
         # computing ra and dec of the target
         ra, dec = obj.coor_in_date(dates)
         # computing the angular distance between Moon and target 
