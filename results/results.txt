@@ -1,0 +1,442 @@
+
+----------
+Visibility of target on 25 October 2023 00:00:00 UT
+at (KPNO) N [31, 57, 30.0000] deg, W [111, 35, 48.0000] deg, 2096 m a.s.l.
+
+Target: Vega
+Equatorial Coordinates for epoch J2000:
+alpha:	+[18, 36, 56.3364] hms
+delta:	+[38, 47, 1.2802] deg
+Proper motion
+mu_alpha =	200.94 mas/yr
+mu_delta =	286.23 mas/yr
+
+0.5520422637060064
+transit:	25 October 2023 23:52:57.6489 UT
+rising: 	25 October 2023 15:41:00.8544 UT
+setting:	25 October 2023 08:08:50.3308 UT
+
+* * SUN * *
+rising:  	25 October 2023 13:37:41.4824 UT
+setting:	25 October 2023 00:43:46.2131 UT
+-- Twilight --
+Duration: 1.45 h
+morning:	25 October 2023 12:10:54.1643 UT
+evening:	25 October 2023 02:10:33.5313 UT
+
+Illuminated fraction of Moon's disk: 82.77 %
+
+Minimum distance from Moon: 77.548 deg at 25 October 2023 02:10:33.5313 UT
+
+Vega is visible for 05h 58m 16.7996s
+From:	25 October 2023 02:10:33.5313 UT
+To:  	25 October 2023 08:08:50.3308 UT
+----------
+
+
+----------
+Visibility of target on 28 January 2023 00:00:00 UT
+at (ORM) N [28, 45, 25.0000] deg, W [17, 53, 33.0000] deg, 2326 m a.s.l.
+
+Target: Vega
+Equatorial Coordinates for epoch J2000:
+alpha:	+[18, 36, 56.3364] hms
+delta:	+[38, 47, 1.2802] deg
+Proper motion
+mu_alpha =	200.94 mas/yr
+mu_delta =	286.23 mas/yr
+
+0.5138447153022956
+transit:	28 January 2023 11:24:29.3389 UT
+rising: 	28 January 2023 03:30:16.2369 UT
+setting:	27 January 2023 19:18:42.4666 UT
+
+* * SUN * *
+rising:  	28 January 2023 08:02:30.7753 UT
+setting:	27 January 2023 18:46:38.3412 UT
+-- Twilight --
+Duration: 1.44 h
+morning:	28 January 2023 06:36:04.3680 UT
+evening:	27 January 2023 20:13:04.7484 UT
+
+Illuminated fraction of Moon's disk: 45.69 %
+
+Minimum distance from Moon: 96.637 deg at 28 January 2023 03:30:16.2369 UT
+
+Vega is visible for 03h 05m 48.1311s
+From:	28 January 2023 03:30:16.2369 UT
+To:  	28 January 2023 06:36:04.3680 UT
+----------
+
+
+----------
+Visibility of target on 28 July 2024 00:00:00 UT
+at (VLT) S [24, 37, 38.0000] deg, W [70, 24, 17.0000] deg, 2635 m a.s.l.
+
+Target: Spica
+Equatorial Coordinates for epoch J2000:
+alpha:	+[13, 25, 11.5794] hms
+delta:	-[11, 9, 40.7501] deg
+Proper motion
+mu_alpha =	-0.04235 mas/yr
+mu_delta =	-0.03067 mas/yr
+
+0.5332311824121593
+transit:	28 July 2024 21:43:51.8741 UT
+rising: 	28 July 2024 15:17:58.8245 UT
+setting:	28 July 2024 04:05:49.0028 UT
+
+* * SUN * *
+rising:  	28 July 2024 11:20:43.7878 UT
+setting:	27 July 2024 22:15:43.2329 UT
+-- Twilight --
+Duration: 1.39 h
+morning:	28 July 2024 09:57:06.9523 UT
+evening:	27 July 2024 23:39:20.0684 UT
+
+Illuminated fraction of Moon's disk: 50.59 %
+
+Minimum distance from Moon: 167.927 deg at 28 July 2024 04:05:49.0028 UT
+
+Spica is visible for 04h 26m 28.9344s
+From:	27 July 2024 23:39:20.0684 UT
+To:  	28 July 2024 04:05:49.0028 UT
+----------
+
+
+----------
+Visibility of target on 20 May 2020 00:00:00 UT
+at (Mt Kent Obs) S [27, 47, 51.7200] deg, E [151, 51, 19.4400] deg, 682 m a.s.l.
+
+Target: Spica
+Equatorial Coordinates for epoch J2000:
+alpha:	+[13, 25, 11.5794] hms
+delta:	-[11, 9, 40.7501] deg
+Proper motion
+mu_alpha =	-0.04235 mas/yr
+mu_delta =	-0.03067 mas/yr
+
+0.4920535731622768
+transit:	19 May 2020 11:28:28.4898 UT
+rising: 	20 May 2020 04:58:59.2898 UT
+setting:	19 May 2020 17:50:05.8597 UT
+
+* * SUN * *
+rising:  	19 May 2020 20:29:56.5524 UT
+setting:	19 May 2020 07:08:33.1125 UT
+-- Twilight --
+Duration: 1.44 h
+morning:	19 May 2020 19:03:27.2374 UT
+evening:	19 May 2020 08:35:02.4275 UT
+
+Illuminated fraction of Moon's disk: 9.47 %
+
+Minimum distance from Moon: 172.546 deg at 19 May 2020 08:35:02.4275 UT
+
+Spica is visible for 09h 15m 03.4322s
+From:	19 May 2020 08:35:02.4275 UT
+To:  	19 May 2020 17:50:05.8597 UT
+----------
+
+
+----------
+Visibility of target on 26 October 2023 00:00:00 UT
+at (KPNO) N [31, 57, 30.0000] deg, W [111, 35, 48.0000] deg, 2096 m a.s.l.
+
+Target: M31
+Equatorial Coordinates for epoch J2000:
+alpha:	+[0, 42, 44.3300] hms
+delta:	+[41, 16, 7.5000] deg
+
+0.5535768226725108
+transit:	26 October 2023 05:53:01.5010 UT
+rising: 	26 October 2023 21:33:26.1182 UT
+setting:	26 October 2023 14:08:40.9603 UT
+
+* * SUN * *
+rising:  	26 October 2023 13:38:28.7360 UT
+setting:	26 October 2023 00:42:45.2093 UT
+-- Twilight --
+Duration: 1.45 h
+morning:	26 October 2023 12:11:35.7027 UT
+evening:	26 October 2023 02:09:38.2426 UT
+
+Illuminated fraction of Moon's disk: 91.27 %
+
+Minimum distance from Moon: 43.583 deg at 26 October 2023 12:11:35.7027 UT
+
+M31 is visible for 10h 01m 57.4601s
+From:	26 October 2023 02:09:38.2426 UT
+To:  	26 October 2023 12:11:35.7027 UT
+----------
+
+
+----------
+Visibility of target on 3 February 2024 00:00:00 UT
+at (VLT) S [24, 37, 38.0000] deg, W [70, 24, 17.0000] deg, 2635 m a.s.l.
+
+Target: LMC
+Equatorial Coordinates for epoch J2000:
+alpha:	+[5, 23, 34.6000] hms
+delta:	-[69, 45, 22.0000] deg
+Proper motion
+mu_alpha =	1.91 mas/yr
+mu_delta =	0.229 mas/yr
+
+0.5148484679118372
+transit:	3 February 2024 01:14:10.6653 UT
+
+* * SUN * *
+rising:  	3 February 2024 10:20:35.0336 UT
+setting:	2 February 2024 23:29:48.5249 UT
+-- Twilight --
+Duration: 1.46 h
+morning:	3 February 2024 08:53:14.5214 UT
+evening:	3 February 2024 00:57:09.0372 UT
+
+Illuminated fraction of Moon's disk: 47.80 %
+
+Minimum distance from Moon: 86.934 deg at 3 February 2024 08:53:14.5214 UT
+
+LMC is visible for 07h 56m 05.4842s
+From:	3 February 2024 00:57:09.0372 UT
+To:  	3 February 2024 08:53:14.5214 UT
+----------
+
+
+----------
+Visibility of target on 28 July 2023 00:00:00 UT
+at (ORM) N [28, 45, 25.0000] deg, W [17, 53, 33.0000] deg, 2326 m a.s.l.
+
+Target: Cyg 1975
+Equatorial Coordinates for epoch J2000:
+alpha:	+[21, 11, 36.5810] hms
+delta:	+[48, 9, 1.9525] deg
+Proper motion
+mu_alpha =	-6.449 mas/yr
+mu_delta =	-5.572 mas/yr
+
+0.5303663708756198
+transit:	28 July 2023 02:01:53.3679 UT
+rising: 	28 July 2023 17:23:51.9184 UT
+setting:	28 July 2023 10:35:58.9176 UT
+
+* * SUN * *
+rising:  	28 July 2023 06:30:54.1824 UT
+setting:	27 July 2023 20:04:55.4807 UT
+-- Twilight --
+Duration: 1.57 h
+morning:	28 July 2023 04:56:40.5231 UT
+evening:	27 July 2023 21:39:09.1400 UT
+
+Illuminated fraction of Moon's disk: 71.80 %
+
+Minimum distance from Moon: 99.827 deg at 28 July 2023 04:56:40.5231 UT
+
+Cyg 1975 is visible for 07h 17m 31.3831s
+From:	27 July 2023 21:39:09.1400 UT
+To:  	28 July 2023 04:56:40.5231 UT
+----------
+
+
+----------
+Visibility of target on 25 July 2023 00:00:00 UT
+at (OHP) N [43, 55, 30.5900] deg, E [5, 42, 28.7900] deg, 650 m a.s.l.
+
+Target: Pollux
+Equatorial Coordinates for epoch J2000:
+alpha:	+[7, 45, 16.4200] hms
+delta:	+[28, 1, 34.5000] deg
+Proper motion
+mu_alpha =	-0.62655 mas/yr
+mu_delta =	-0.0458 mas/yr
+
+transit:	25 July 2023 11:12:13.2883 UT
+rising: 	25 July 2023 03:06:31.7190 UT
+setting:	24 July 2023 19:17:54.8520 UT
+
+* * SUN * *
+rising:  	25 July 2023 04:17:51.5965 UT
+setting:	24 July 2023 19:08:54.1668 UT
+-- Twilight --
+Duration: 2.23 h
+morning:	25 July 2023 02:03:56.0146 UT
+evening:	24 July 2023 21:22:49.7487 UT
+
+Target is under horizon
+Target is not visible!
+
+----------
+Visibility of target on 23 December 2023 00:00:00 UT
+at (OHP) N [43, 55, 30.5900] deg, E [5, 42, 28.7900] deg, 650 m a.s.l.
+
+Target: Vega
+Equatorial Coordinates for epoch J2000:
+alpha:	+[18, 36, 56.3364] hms
+delta:	+[38, 47, 1.2802] deg
+Proper motion
+mu_alpha =	200.94 mas/yr
+mu_delta =	286.23 mas/yr
+
+0.5343465688749869
+0.5270009966776444
+transit:	23 December 2023 12:13:04.1484 UT
+rising: 	23 December 2023 02:23:31.8461 UT
+setting:	22 December 2023 22:02:36.5404 UT
+
+* * SUN * *
+rising:  	23 December 2023 07:09:18.5873 UT
+setting:	22 December 2023 16:02:50.2336 UT
+-- Twilight --
+Duration: 1.85 h
+morning:	23 December 2023 05:18:07.0222 UT
+evening:	22 December 2023 17:54:01.7986 UT
+
+Illuminated fraction of Moon's disk: 84.22 %
+
+Minimum distance from Moon: 97.565 deg at 22 December 2023 17:54:01.7986 UT
+
+Vega is visible for 07h 03m 09.9179s
+From:	22 December 2023 17:54:01.7986 UT
+To:  	22 December 2023 22:02:36.5404 UT
+From:	23 December 2023 02:23:31.8461 UT
+To:  	23 December 2023 05:18:07.0222 UT
+----------
+
+
+----------
+Visibility of target on 25 October 2023 00:00:00 UT
+at (KPNO) N [31, 57, 30.0000] deg, W [111, 35, 48.0000] deg, 2096 m a.s.l.
+
+Target: Polaris
+Equatorial Coordinates for epoch J2000:
+alpha:	+[2, 31, 49.0946] hms
+delta:	+[89, 15, 50.7923] deg
+Proper motion
+mu_alpha =	0.04448 mas/yr
+mu_delta =	-0.01185 mas/yr
+
+0.5520422341133419
+transit:	25 October 2023 08:16:03.2436 UT
+
+* * SUN * *
+rising:  	25 October 2023 13:37:41.4824 UT
+setting:	25 October 2023 00:43:46.2131 UT
+-- Twilight --
+Duration: 1.45 h
+morning:	25 October 2023 12:10:54.1643 UT
+evening:	25 October 2023 02:10:33.5313 UT
+
+Illuminated fraction of Moon's disk: 83.50 %
+
+Minimum distance from Moon: 97.901 deg at 25 October 2023 12:10:54.1643 UT
+
+Polaris is visible for 10h 00m 20.6330s
+From:	25 October 2023 02:10:33.5313 UT
+To:  	25 October 2023 12:10:54.1643 UT
+----------
+
+
+----------
+Visibility of target on 25 October 2023 00:00:00 UT
+at (VLT) S [24, 37, 38.0000] deg, W [70, 24, 17.0000] deg, 2635 m a.s.l.
+
+Target: Polaris
+Equatorial Coordinates for epoch J2000:
+alpha:	+[2, 31, 49.0946] hms
+delta:	+[89, 15, 50.7923] deg
+Proper motion
+mu_alpha =	0.04448 mas/yr
+mu_delta =	-0.01185 mas/yr
+
+transit:	25 October 2023 05:31:44.1039 UT
+
+
+* * SUN * *
+rising:  	25 October 2023 09:59:58.9224 UT
+setting:	24 October 2023 22:51:43.6101 UT
+-- Twilight --
+Duration: 1.40 h
+morning:	25 October 2023 08:35:49.9058 UT
+evening:	25 October 2023 00:15:52.6268 UT
+
+Target is always under horizon
+Target is not visible!
+
+----------
+Visibility of target on 20 June 2024 00:00:00 UT
+at (SPT) S [89, 59, 22.0000] deg, W [45, 0, 0.0000] deg, 2800 m a.s.l.
+
+Target: alf Car
+Equatorial Coordinates for epoch J2000:
+alpha:	+[6, 23, 57.1099] hms
+delta:	-[52, 41, 44.3810] deg
+Proper motion
+mu_alpha =	261.21210208 mas/yr
+mu_delta =	-25.29220544 mas/yr
+
+0.5220323393648107
+transit:	20 June 2024 15:34:12.4258 UT
+
+Daylight never occurs
+
+Illuminated fraction of Moon's disk: 97.03 %
+
+Minimum distance from Moon: 96.004 deg at 20 June 2024 00:00:00 UT
+
+alf Car is visible for 24h 00m 00s
+From:	20 June 2024 00:00:00 UT
+To:  	21 June 2024 00:00:00 UT
+----------
+
+
+----------
+Visibility of target on 20 March 2024 00:00:00 UT
+at (SPT) S [89, 59, 22.0000] deg, W [45, 0, 0.0000] deg, 2800 m a.s.l.
+
+Target: alf Car
+Equatorial Coordinates for epoch J2000:
+alpha:	+[6, 23, 57.1099] hms
+delta:	-[52, 41, 44.3810] deg
+Proper motion
+mu_alpha =	261.21210208 mas/yr
+mu_delta =	-25.29220544 mas/yr
+
+
+Night never occurs
+Target is not visible!
+
+----------
+Visibility of target on 3 November 1990 00:00:00 UT
+at (KPNO) N [31, 57, 30.0000] deg, W [111, 35, 48.0000] deg, 2096 m a.s.l.
+
+Target: Vega
+Equatorial Coordinates for epoch J2000:
+alpha:	+[18, 36, 56.3364] hms
+delta:	+[38, 47, 1.2802] deg
+Proper motion
+mu_alpha =	200.94 mas/yr
+mu_delta =	286.23 mas/yr
+
+0.5643514174547001
+transit:	3 November 1990 23:09:11.1706 UT
+rising: 	3 November 1990 15:10:21.6431 UT
+setting:	3 November 1990 07:11:56.5695 UT
+
+* * SUN * *
+rising:  	3 November 1990 13:45:03.9370 UT
+setting:	3 November 1990 00:35:19.7805 UT
+-- Twilight --
+Duration: 1.46 h
+morning:	3 November 1990 12:17:17.6896 UT
+evening:	3 November 1990 02:03:06.0278 UT
+
+Illuminated fraction of Moon's disk: 99.69 %
+
+Minimum distance from Moon: 99.017 deg at 3 November 1990 02:03:06.0278 UT
+
+Vega is visible for 05h 08m 50.5417s
+From:	3 November 1990 02:03:06.0278 UT
+To:  	3 November 1990 07:11:56.5695 UT
+----------
+
