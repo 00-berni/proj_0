@@ -1593,13 +1593,13 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
                         alt_pos = -3
                         if dalt[i]+alt_pos <= 0:
                             alt_pos = 2
-                        plt.annotate(f'{dist[i]:.0f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.005,dalt[i]+alt_pos),color='white')
+                        plt.annotate(f'{dist[i]:.0f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.005,dalt[i]+alt_pos),color='white',fontsize=12)
         # displaying minimum distance
         plt.text(0.7, 0.02, info_str, fontsize=14, transform=plt.gcf().transFigure)
     # case for a not-visible target
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
-        plt.text(0.42, 0.5, not_vis, fontsize=20, transform=plt.gcf().transFigure, bbox=props)
+        plt.text(0.38, 0.5, not_vis, fontsize=23, transform=plt.gcf().transFigure, bbox=props)
     pos_leg = (-0.04, 0.8)
     # condition to plot only the visibility window
     if window is not None and win_par:
@@ -1615,7 +1615,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     # condtion to save automatically the figure
     if save_fig:
         from .stuff import RESULTS_FOLDER, ph
-        namefig = obj.name.replace(' ','-') + f'_{date.date[0]}-{date.date[1]}-{date.date[2]:.0f}_' + obs.name.replace(' ','-')
+        namefig = obj.name.replace(' ','-') + f'_{truedate.date[0]}-{truedate.date[1]}-{truedate.date[2]:.0f}_' + obs.name.replace(' ','-')
         if not_vis is not None:
             namefig += '_not-vis'
         namefig += '.png'
@@ -1715,7 +1715,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     if type(m) == list:
         # target never rises
         if not m[1]:
-            not_vis = '\nTarget is always under horizon'
+            not_vis = '\nTarget is always below the horizon'
             m = Date(date.date,time=m[0])
             # printing information about target and Sun
             print('transit:\t'+m.print_date()+'\n')
@@ -1744,7 +1744,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             if set <= tw[1]:
                 # target does not rise in the window
                 if rise >= tw[0]:
-                    not_vis = '\nTarget is under horizon'
+                    not_vis = '\nTarget is below the horizon'
                     start_point = Date(jd=start_point)
                     # printing information about target and Sun
                     print(f'transit:\t{Date(jd=tran).print_date()}')
@@ -1771,7 +1771,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             if rise >= tw[0]:
                 # target does not rise in the window
                 if set > rise or set <= tw[1]:
-                    not_vis = '\nTarget is under horizon'
+                    not_vis = '\nTarget is below the horizon'
                     start_point = Date(jd=start_point)
                     # printing information about target and Sun
                     print(f'transit:\t{Date(jd=tran).print_date()}')
