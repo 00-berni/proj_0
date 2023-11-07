@@ -1282,6 +1282,7 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: Target, results: bool = False
     tmpdate = Date(date.date,0.)
     Dt = time_correction(tmpdate.date[0])
     GST0 = Green_ST(tmpdate,True,obj.epoch)
+    del tmpdate
     # computing r.a. and dec. on nearest days
     # (previous and consecutive one) at 0h TD     
     tmpdate = Date(date.date,0.,timetype='TD')
@@ -1375,10 +1376,10 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: Target, results: bool = False
             # checking the value       
             m = np.where(abs(m) > 1, m-np.sign(m), m)
             m = np.where(m < 0, m+1, m)
-        if mt < m[0]:
-            m[0] -= 1
-        if mt > m[1]:
-            m[1] += 1
+        # if mt < m[0]:
+        #     m[0] -= 1
+        # if mt > m[1]:
+        #     m[1] += 1
         # checking the value       
         # m = np.where(m*24 < time.hour(), m+1, m)
         m = Time(m*Time.DAYSEC)    
@@ -1666,7 +1667,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     obj.obj_info()
     
     # computing trans., ris. and set. of the target
-    m = tran_ris_set(date,obs,obj,False)
+    m = tran_ris_set(date,obs,obj,True)
     # initializing Sun
     SUN = Sun()
     # computing twilights
@@ -1686,7 +1687,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                 else:
                     m = Date(date.date,time=m).jd 
                 visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,win_par=False)
-            print(not_vis+'\nTarget is not visible!')
+            print(not_vis+'\nTarget is not visible!\n'+SEP)
             return None
         # Sun never rises
         else:
@@ -1725,7 +1726,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                 start_point = Date(jd=start_point)
                 m = m.jd
                 visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
-            print(not_vis+'\nTarget is not visible!')
+            print(not_vis+'\nTarget is not visible!\n'+SEP)
             return None
     else:
         # extracting transit, rising and setting times in jds
@@ -1755,7 +1756,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                         MOON = Moon()
                         m = Date(jd=np.array([tran,rise,set])).jd
                         visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
-                    print(not_vis+'\nTarget is not visible!')
+                    print(not_vis+'\nTarget is not visible!\n'+SEP)
                     return None
                 else:
                     # updating the window
@@ -1782,7 +1783,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                     if display_plots:
                         MOON = Moon()
                         visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
-                    print(not_vis+'\nTarget is not visible!')
+                    print(not_vis+'\nTarget is not visible!\n'+SEP)
                     return None
                 else:
                     # updating the window
@@ -1833,7 +1834,6 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         # computing Moon angular size
         r = MOON.ang_diameter(dates,moonalt).deg/2
         mindist = r
-        print(max(r))
         # computing ra and dec of the target
         ra, dec = obj.coor_in_date(dates)
         # computing the angular distance between Moon and target 
@@ -1862,7 +1862,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
                 print(sun_str)
                 if display_plots:
                     visibility_plot(date,start_point,obj,obs,SUN,MOON,m,tw,not_vis=not_vis,save_fig=save_fig,window=window,win_par=win)
-                print(not_vis+"\nIt is not visible!")
+                print(not_vis+"\nIt is not visible!"+SEP)
                 return None
         else:
             # storing distances information in the window of visibility
