@@ -1,6 +1,6 @@
 
 ----------
-Visibility of target on 25 October 2023 00:00:00 UT
+Visibility of target on 1 January 2000 00:00:00 UT
 at (KPNO) N [31, 57, 30.0000] deg, W [111, 35, 48.0000] deg, 2096 m a.s.l.
 
 Target: Vega
@@ -11,34 +11,32 @@ Proper motion
 mu_alpha =	200.94 mas/yr
 mu_delta =	286.23 mas/yr
 
-
-transit:	25 October 2023 23:52:57.6468 UT
-rising :	25 October 2023 15:41:00.8715 UT
-setting:	25 October 2023 08:08:50.3203 UT
-transit:	25 October 2023 23:52:57.6468 UT
-rising: 	25 October 2023 15:41:00.8715 UT
-setting:	25 October 2023 08:08:50.3203 UT
+transit:	1 January 2000 19:20:14.6427 UT
+rising: 	1 January 2000 11:17:55.9540 UT
+setting:	1 January 2000 03:26:29.2407 UT
 
 * * SUN * *
-rising:  	25 October 2023 13:37:41.4824 UT
-setting:	25 October 2023 00:43:46.2131 UT
+rising:  	1 January 2000 14:27:16.8904 UT
+setting:	1 January 2000 00:31:42.6903 UT
 -- Twilight --
-Duration: 1.45 h
-morning:	25 October 2023 12:10:54.1643 UT
-evening:	25 October 2023 02:10:33.5313 UT
+Duration: 1.54 h
+morning:	1 January 2000 12:54:50.6316 UT
+evening:	1 January 2000 02:04:08.9490 UT
 
-Illuminated fraction of Moon's disk: 82.77 %
+Illuminated fraction of Moon's disk: 22.98 %
 
-Minimum distance from Moon: 77.548 deg at 25 October 2023 02:10:33.5313 UT
+Minimum distance from Moon: 72.290 deg at 1 January 2000 12:54:50.6316 UT
 
-Vega is visible for 05h 58m 16.7890s
-From:	25 October 2023 02:10:33.5313 UT
-To:  	25 October 2023 08:08:50.3203 UT
+Vega is visible for 02h 59m 14.9693s
+From:	1 January 2000 02:04:08.9490 UT
+To:  	1 January 2000 03:26:29.2407 UT
+From:	1 January 2000 11:17:55.9540 UT
+To:  	1 January 2000 12:54:50.6316 UT
 ----------
 
 
 ----------
-Visibility of target on 28 January 2023 00:00:00 UT
+Visibility of target on 21 February 2015 00:00:00 UT
 at (ORM) N [28, 45, 25.0000] deg, W [17, 53, 33.0000] deg, 2326 m a.s.l.
 
 Target: Vega
@@ -49,29 +47,25 @@ Proper motion
 mu_alpha =	200.94 mas/yr
 mu_delta =	286.23 mas/yr
 
-
-transit:	28 January 2023 11:24:29.3260 UT
-rising :	28 January 2023 03:30:16.2358 UT
-setting:	28 January 2023 19:18:42.4289 UT
-transit:	28 January 2023 11:24:29.3260 UT
-rising: 	28 January 2023 03:30:16.2358 UT
-setting:	27 January 2023 19:18:42.4289 UT
+transit:	21 February 2015 09:45:00.6017 UT
+rising: 	21 February 2015 01:58:35.1351 UT
+setting:	21 February 2015 17:31:26.0600 UT
 
 * * SUN * *
-rising:  	28 January 2023 08:02:30.7753 UT
-setting:	27 January 2023 18:46:38.3412 UT
+rising:  	21 February 2015 07:45:28.6053 UT
+setting:	20 February 2015 19:05:16.1873 UT
 -- Twilight --
-Duration: 1.44 h
-morning:	28 January 2023 06:36:04.3680 UT
-evening:	27 January 2023 20:13:04.7484 UT
+Duration: 1.40 h
+morning:	21 February 2015 06:21:43.9006 UT
+evening:	20 February 2015 20:29:00.8920 UT
 
-Illuminated fraction of Moon's disk: 45.69 %
+Illuminated fraction of Moon's disk: 7.13 %
 
-Minimum distance from Moon: 96.637 deg at 28 January 2023 03:30:16.2358 UT
+Minimum distance from Moon: 82.811 deg at 21 February 2015 01:58:35.1351 UT
 
-Vega is visible for 03h 05m 48.1322s
-From:	28 January 2023 03:30:16.2358 UT
-To:  	28 January 2023 06:36:04.3680 UT
+Vega is visible for 04h 23m 08.7655s
+From:	21 February 2015 01:58:35.1351 UT
+To:  	21 February 2015 06:21:43.9006 UT
 ----------
 
 
@@ -84,16 +78,12 @@ Equatorial Coordinates for epoch J2000:
 alpha:	+[13, 25, 11.5794] hms
 delta:	-[11, 9, 40.7501] deg
 Proper motion
-mu_alpha =	-0.04235 mas/yr
-mu_delta =	-0.03067 mas/yr
+mu_alpha =	-42.35000000000001 mas/yr
+mu_delta =	-30.67 mas/yr
 
-
-transit:	27 July 2024 21:43:51.8735 UT
-rising :	28 July 2024 15:17:58.8275 UT
-setting:	28 July 2024 04:05:49.0041 UT
-transit:	28 July 2024 21:43:51.8735 UT
-rising: 	28 July 2024 15:17:58.8275 UT
-setting:	28 July 2024 04:05:49.0041 UT
+transit:	28 July 2024 21:39:56.0215 UT
+rising: 	28 July 2024 15:17:58.9177 UT
+setting:	28 July 2024 04:05:49.0478 UT
 
 * * SUN * *
 rising:  	28 July 2024 11:20:43.7878 UT
@@ -105,16 +95,16 @@ evening:	27 July 2024 23:39:20.0684 UT
 
 Illuminated fraction of Moon's disk: 50.59 %
 
-Minimum distance from Moon: 167.927 deg at 28 July 2024 04:05:49.0041 UT
+Minimum distance from Moon: 167.928 deg at 28 July 2024 04:05:49.0478 UT
 
-Spica is visible for 04h 26m 28.9357s
+Spica is visible for 04h 26m 28.9794s
 From:	27 July 2024 23:39:20.0684 UT
-To:  	28 July 2024 04:05:49.0041 UT
+To:  	28 July 2024 04:05:49.0478 UT
 ----------
 
 
 ----------
-Visibility of target on 20 May 2020 00:00:00 UT
+Visibility of target on 20 May 2023 00:00:00 UT
 at (Mt Kent Obs) S [27, 47, 51.7200] deg, E [151, 51, 19.4400] deg, 682 m a.s.l.
 
 Target: Spica
@@ -122,32 +112,28 @@ Equatorial Coordinates for epoch J2000:
 alpha:	+[13, 25, 11.5794] hms
 delta:	-[11, 9, 40.7501] deg
 Proper motion
-mu_alpha =	-0.04235 mas/yr
-mu_delta =	-0.03067 mas/yr
+mu_alpha =	-42.35000000000001 mas/yr
+mu_delta =	-30.67 mas/yr
 
-
-transit:	19 May 2020 11:28:28.4882 UT
-rising :	20 May 2020 04:58:59.2902 UT
-setting:	20 May 2020 17:50:05.8617 UT
-transit:	19 May 2020 11:28:28.4882 UT
-rising: 	20 May 2020 04:58:59.2902 UT
-setting:	19 May 2020 17:50:05.8617 UT
+transit:	19 May 2023 11:31:29.3062 UT
+rising: 	20 May 2023 05:01:57.8605 UT
+setting:	19 May 2023 17:57:04.8465 UT
 
 * * SUN * *
-rising:  	19 May 2020 20:29:56.5524 UT
-setting:	19 May 2020 07:08:33.1125 UT
+rising:  	19 May 2023 20:29:33.7239 UT
+setting:	19 May 2023 07:08:52.3876 UT
 -- Twilight --
 Duration: 1.44 h
-morning:	19 May 2020 19:03:27.2374 UT
-evening:	19 May 2020 08:35:02.4275 UT
+morning:	19 May 2023 19:03:09.3327 UT
+evening:	19 May 2023 08:35:16.7788 UT
 
-Illuminated fraction of Moon's disk: 9.47 %
+Illuminated fraction of Moon's disk: 0.06 %
 
-Minimum distance from Moon: 172.546 deg at 19 May 2020 08:35:02.4275 UT
+Minimum distance from Moon: 144.653 deg at 19 May 2023 17:57:04.8465 UT
 
-Spica is visible for 09h 15m 03.4342s
-From:	19 May 2020 08:35:02.4275 UT
-To:  	19 May 2020 17:50:05.8617 UT
+Spica is visible for 09h 21m 48.0677s
+From:	19 May 2023 08:35:16.7788 UT
+To:  	19 May 2023 17:57:04.8465 UT
 ----------
 
 
@@ -160,13 +146,9 @@ Equatorial Coordinates for epoch J2000:
 alpha:	+[0, 42, 44.3300] hms
 delta:	+[41, 16, 7.5000] deg
 
-
-transit:	26 October 2023 05:53:01.5021 UT
-rising :	26 October 2023 21:33:26.1292 UT
-setting:	26 October 2023 14:08:40.9585 UT
-transit:	26 October 2023 05:53:01.5021 UT
-rising: 	26 October 2023 21:33:26.1292 UT
-setting:	26 October 2023 14:08:40.9585 UT
+transit:	26 October 2023 05:53:01.5010 UT
+rising: 	26 October 2023 21:33:26.1182 UT
+setting:	26 October 2023 14:08:40.9603 UT
 
 * * SUN * *
 rising:  	26 October 2023 13:38:28.7360 UT
@@ -198,10 +180,7 @@ Proper motion
 mu_alpha =	1.91 mas/yr
 mu_delta =	0.229 mas/yr
 
-
-transit:	3 February 2024 01:14:10.6668 UT
-LMC is circumpolar
-transit:	3 February 2024 01:14:10.6668 UT
+transit:	3 February 2024 01:14:07.6023 UT
 
 * * SUN * *
 rising:  	3 February 2024 10:20:35.0336 UT
@@ -213,7 +192,7 @@ evening:	3 February 2024 00:57:09.0372 UT
 
 Illuminated fraction of Moon's disk: 47.80 %
 
-Minimum distance from Moon: 86.934 deg at 3 February 2024 08:53:14.5214 UT
+Minimum distance from Moon: 86.935 deg at 3 February 2024 08:53:14.5214 UT
 
 LMC is visible for 07h 56m 05.4842s
 From:	3 February 2024 00:57:09.0372 UT
@@ -231,15 +210,11 @@ alpha:	+[21, 11, 36.5810] hms
 delta:	+[48, 9, 1.9525] deg
 Proper motion
 mu_alpha =	-6.449 mas/yr
-mu_delta =	-5.572 mas/yr
+mu_delta =	-5.572000000000001 mas/yr
 
-
-transit:	28 July 2023 02:01:53.3671 UT
-rising :	28 July 2023 17:23:51.9252 UT
-setting:	28 July 2023 10:35:58.9043 UT
-transit:	28 July 2023 02:01:53.3671 UT
-rising: 	28 July 2023 17:23:51.9252 UT
-setting:	28 July 2023 10:35:58.9043 UT
+transit:	28 July 2023 02:02:03.4623 UT
+rising: 	28 July 2023 17:23:47.9432 UT
+setting:	28 July 2023 10:36:23.0823 UT
 
 * * SUN * *
 rising:  	28 July 2023 06:30:54.1824 UT
@@ -251,7 +226,7 @@ evening:	27 July 2023 21:39:09.1400 UT
 
 Illuminated fraction of Moon's disk: 71.80 %
 
-Minimum distance from Moon: 99.827 deg at 28 July 2023 04:56:40.5231 UT
+Minimum distance from Moon: 99.868 deg at 28 July 2023 04:56:40.5231 UT
 
 V1975 Cyg is visible for 07h 17m 31.3831s
 From:	27 July 2023 21:39:09.1400 UT
@@ -268,16 +243,12 @@ Equatorial Coordinates for epoch J2000:
 alpha:	+[7, 45, 16.4200] hms
 delta:	+[28, 1, 34.5000] deg
 Proper motion
-mu_alpha =	-0.62655 mas/yr
-mu_delta =	-0.0458 mas/yr
+mu_alpha =	-626.55 mas/yr
+mu_delta =	-45.8 mas/yr
 
-
-transit:	25 July 2023 11:12:13.2854 UT
-rising :	25 July 2023 03:06:31.7177 UT
-setting:	25 July 2023 19:17:54.8503 UT
-transit:	25 July 2023 11:12:13.2854 UT
-rising: 	25 July 2023 03:06:31.7177 UT
-setting:	24 July 2023 19:17:54.8503 UT
+transit:	25 July 2023 11:12:14.2684 UT
+rising: 	25 July 2023 03:06:32.5973 UT
+setting:	24 July 2023 19:21:51.8373 UT
 
 * * SUN * *
 rising:  	25 July 2023 04:17:51.5965 UT
@@ -288,7 +259,8 @@ morning:	25 July 2023 02:03:56.0146 UT
 evening:	24 July 2023 21:22:49.7487 UT
 
 Target is below the horizon
-Target is not visible!----------
+Target is not visible!
+----------
 
 
 ----------
@@ -303,13 +275,9 @@ Proper motion
 mu_alpha =	200.94 mas/yr
 mu_delta =	286.23 mas/yr
 
-
-transit:	23 December 2023 12:13:04.1378 UT
-rising :	23 December 2023 02:23:31.8495 UT
-setting:	23 December 2023 22:02:36.4707 UT
-transit:	23 December 2023 12:13:04.1378 UT
-rising: 	23 December 2023 02:23:31.8495 UT
-setting:	22 December 2023 22:02:36.4707 UT
+transit:	23 December 2023 12:07:45.5840 UT
+rising: 	23 December 2023 02:40:05.4776 UT
+setting:	22 December 2023 21:39:21.6048 UT
 
 * * SUN * *
 rising:  	23 December 2023 07:09:18.5873 UT
@@ -319,14 +287,14 @@ Duration: 1.85 h
 morning:	23 December 2023 05:18:07.0222 UT
 evening:	22 December 2023 17:54:01.7986 UT
 
-Illuminated fraction of Moon's disk: 84.22 %
+Illuminated fraction of Moon's disk: 84.27 %
 
-Minimum distance from Moon: 97.565 deg at 22 December 2023 17:54:01.7986 UT
+Minimum distance from Moon: 99.378 deg at 22 December 2023 17:54:01.7986 UT
 
-Vega is visible for 07h 03m 09.8447s
+Vega is visible for 06h 23m 21.3508s
 From:	22 December 2023 17:54:01.7986 UT
-To:  	22 December 2023 22:02:36.4707 UT
-From:	23 December 2023 02:23:31.8495 UT
+To:  	22 December 2023 21:39:21.6048 UT
+From:	23 December 2023 02:40:05.4776 UT
 To:  	23 December 2023 05:18:07.0222 UT
 ----------
 
@@ -340,13 +308,10 @@ Equatorial Coordinates for epoch J2000:
 alpha:	+[2, 31, 49.0946] hms
 delta:	+[89, 15, 50.7923] deg
 Proper motion
-mu_alpha =	0.04448 mas/yr
-mu_delta =	-0.01185 mas/yr
+mu_alpha =	44.48 mas/yr
+mu_delta =	-11.85 mas/yr
 
-
-transit:	25 October 2023 08:16:03.1416 UT
-Polaris is circumpolar
-transit:	25 October 2023 08:16:03.1416 UT
+transit:	25 October 2023 08:16:03.3869 UT
 
 * * SUN * *
 rising:  	25 October 2023 13:37:41.4824 UT
@@ -375,13 +340,10 @@ Equatorial Coordinates for epoch J2000:
 alpha:	+[2, 31, 49.0946] hms
 delta:	+[89, 15, 50.7923] deg
 Proper motion
-mu_alpha =	0.04448 mas/yr
-mu_delta =	-0.01185 mas/yr
+mu_alpha =	44.48 mas/yr
+mu_delta =	-11.85 mas/yr
 
-
-transit:	25 October 2023 05:31:44.0352 UT
-Polaris never rises
-transit:	25 October 2023 05:31:44.0352 UT
+transit:	25 October 2023 05:31:44.2472 UT
 
 
 * * SUN * *
@@ -393,7 +355,8 @@ morning:	25 October 2023 08:35:49.9058 UT
 evening:	25 October 2023 00:15:52.6268 UT
 
 Target is always below the horizon
-Target is not visible!----------
+Target is not visible!
+----------
 
 
 ----------
@@ -408,16 +371,13 @@ Proper motion
 mu_alpha =	261.21210208 mas/yr
 mu_delta =	-25.29220544 mas/yr
 
-
-transit:	20 June 2024 15:34:12.4095 UT
-alf Car is circumpolar
-transit:	20 June 2024 15:34:12.4095 UT
+transit:	20 June 2024 15:27:07.6203 UT
 
 Daylight never occurs
 
 Illuminated fraction of Moon's disk: 97.03 %
 
-Minimum distance from Moon: 96.004 deg at 20 June 2024 00:00:00 UT
+Minimum distance from Moon: 96.726 deg at 20 June 2024 00:00:00 UT
 
 alf Car is visible for 24h 00m 00s
 From:	20 June 2024 00:00:00 UT
@@ -438,11 +398,9 @@ mu_alpha =	261.21210208 mas/yr
 mu_delta =	-25.29220544 mas/yr
 
 
-transit:	20 March 2024 21:35:53.9042 UT
-alf Car is circumpolar
-
 Night never occurs
-Target is not visible!----------
+Target is not visible!
+----------
 
 
 ----------
@@ -457,13 +415,9 @@ Proper motion
 mu_alpha =	200.94 mas/yr
 mu_delta =	286.23 mas/yr
 
-
-transit:	3 November 1990 23:09:11.1608 UT
-rising :	3 November 1990 15:10:21.6540 UT
-setting:	3 November 1990 07:11:56.5588 UT
-transit:	3 November 1990 23:09:11.1608 UT
-rising: 	3 November 1990 15:10:21.6540 UT
-setting:	3 November 1990 07:11:56.5588 UT
+transit:	3 November 1990 23:11:13.7792 UT
+rising: 	3 November 1990 15:08:56.8739 UT
+setting:	3 November 1990 07:17:26.6133 UT
 
 * * SUN * *
 rising:  	3 November 1990 13:45:03.9370 UT
@@ -475,10 +429,10 @@ evening:	3 November 1990 02:03:06.0278 UT
 
 Illuminated fraction of Moon's disk: 99.69 %
 
-Minimum distance from Moon: 99.017 deg at 3 November 1990 02:03:06.0278 UT
+Minimum distance from Moon: 98.272 deg at 3 November 1990 02:03:06.0278 UT
 
-Vega is visible for 05h 08m 50.5310s
+Vega is visible for 05h 14m 20.5855s
 From:	3 November 1990 02:03:06.0278 UT
-To:  	3 November 1990 07:11:56.5588 UT
+To:  	3 November 1990 07:17:26.6133 UT
 ----------
 

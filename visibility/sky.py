@@ -101,8 +101,6 @@ def precession_corr(date: Date, ra0: HAngles, dec0: HAngles, epoch: str = 'J2000
     tmp_date = date.copy()
 
     J2000 = Date.J2000
-    B1950 = Date.B1950
-    B1900 = Date.B1900
 
     if tmp_date.time.tytime == 'UT':
         tmp_date = tmp_date.change_time_type('TD')
@@ -1000,9 +998,9 @@ class Target():
     :vartype coor: Equatorial
     :ivar epoch: standard epoch
     :vartype epoch: str
-    :ivar mua: velocity in r.a. [as/yrs]
+    :ivar mua: velocity in r.a. [mas/yrs]
     :vartype mua: float
-    :ivar mud: velocity in dec. [as/yrs]
+    :ivar mud: velocity in dec. [mas/yrs]
     :vartype mud: float
     
     """
@@ -1029,8 +1027,12 @@ class Target():
         self.name = name
         self.coor = coor.copy()
         self.epoch = epoch
-        self.mua = prmt[0] if prmt is not None else None
-        self.mud = prmt[1] if prmt is not None else None
+
+        if prmt is None:
+            prmt = [None, None]
+
+        self.mua = prmt[0]*1e-3 if prmt[0] is not None else None
+        self.mud = prmt[1]*1e-3 if prmt[0] is not None else None
     
     def copy(self):
         """Function to get an exact copy of the object
@@ -1050,7 +1052,7 @@ class Target():
         # checking if proper motion informations are present
         if self.mua is not None:
             print('Proper motion')
-            print(f'mu_alpha =\t{self.mua} mas/yr\nmu_delta =\t{self.mud} mas/yr')
+            print(f'mu_alpha =\t{self.mua*1e3} mas/yr\nmu_delta =\t{self.mud*1e3} mas/yr')
         print()
 
     def getcoor(self, sel: str = 'all') -> HAngles | tuple[HAngles]:
@@ -1315,17 +1317,13 @@ def tran_ris_set(date: Date, obs_pos: GeoPos, obj: Target, results: bool = False
         # computing the HA
         H = GST - lon - a
         # correcting the previous computation
-        Dmt = - H.deg/360
+        Dmt = -H.deg/360
         mt += Dmt
         # checking the value       
         if abs(mt) > 1:
             mt -= np.sign(mt)
         elif mt < 0:
             mt += 1
-    time = date.time
-    # checking the value       
-    # if mt*24 < time.hour():
-    #     mt += 1
     # saving the result in seconds 
     m = Time(mt*Time.DAYSEC)
     # condition to print the result
@@ -1478,12 +1476,13 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     ealt = compute_alt(event,obs,obj,True)    
     # plotting all
     plt.plot(dayrange,alt.deg,'b',label=obj.name)
-    # if type(m) != np.ndarray:
-    #     plt.plot(event.jd,ealt.deg,'vg',label='transit')
-    # else:
-    #     plt.plot(event.jd[0],ealt.deg[0],'vg',label='transit')
-    #     plt.plot(event.jd[1],ealt.deg[1],'vy',label='rising')
-    #     plt.plot(event.jd[2],ealt.deg[2],'vr',label='setting')
+    if not win_par:
+        if type(m) != np.ndarray:
+            plt.plot(event.jd,ealt.deg,'vg',label='transit')
+        else:
+            plt.plot(event.jd[0],ealt.deg[0],'vg',label='transit')
+            plt.plot(event.jd[1],ealt.deg[1],'vy',label='rising')
+            plt.plot(event.jd[2],ealt.deg[2],'vr',label='setting')
     
     # computing the date for each Julian Day used to sample trajectory
     dates = Date(jd=dayrange,timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar)    
@@ -1667,7 +1666,7 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     obj.obj_info()
     
     # computing trans., ris. and set. of the target
-    m = tran_ris_set(date,obs,obj,True)
+    m = tran_ris_set(date,obs,obj,False)
     # initializing Sun
     SUN = Sun()
     # computing twilights
@@ -1734,14 +1733,18 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         # shifting the time to get a window during 
         # a single night
         if tran > start_point+1:
-            tran -= 1
+            # tran -= 1
+            tran = Date((date-1).date,tran_ris_set(date-1,obs,obj).val[0]).jd
         elif tran < start_point:
-            tran += 1
+            tran = Date((date+1).date,tran_ris_set(date+1,obs,obj).val[0]).jd
+            # tran += 1
         if set > start_point+1:
-            set -= 1
+            set = Date((date-1).date,tran_ris_set(date-1,obs,obj).val[2]).jd
+            # set -= 1
         # studying the visibility
         if rise < start_point:
-            rise += 1
+            rise = Date((date+1).date,tran_ris_set(date+1,obs,obj).val[1]).jd
+            # rise += 1
             if set <= tw[1]:
                 # target does not rise in the window
                 if rise >= tw[0]:
