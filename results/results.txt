@@ -17,18 +17,19 @@ setting:	1 January 2000 03:26:29.2407 UT
 
 * * SUN * *
 rising:  	1 January 2000 14:27:16.8904 UT
-setting:	1 January 2000 00:31:42.6903 UT
+setting:	1 January 2000 00:31:01.0707 UT
 -- Twilight --
 Duration: 1.54 h
 morning:	1 January 2000 12:54:50.6316 UT
-evening:	1 January 2000 02:04:08.9490 UT
+evening:	1 January 2000 02:03:30.6413 UT
 
-Illuminated fraction of Moon's disk: 22.98 %
+Max illuminated fraction of Moon's disk: 23.25 % on 1 January 2000 11:17:55.9540 UT
+Mean illuminated fraction of Moon's disk: 22.98 %
 
 Minimum distance from Moon: 72.290 deg at 1 January 2000 12:54:50.6316 UT
 
-Vega is visible for 02h 59m 14.9693s
-From:	1 January 2000 02:04:08.9490 UT
+Vega is visible for 02h 59m 53.2770s
+From:	1 January 2000 02:03:30.6413 UT
 To:  	1 January 2000 03:26:29.2407 UT
 From:	1 January 2000 11:17:55.9540 UT
 To:  	1 January 2000 12:54:50.6316 UT
@@ -53,13 +54,14 @@ setting:	21 February 2015 17:31:26.0600 UT
 
 * * SUN * *
 rising:  	21 February 2015 07:45:28.6053 UT
-setting:	20 February 2015 19:05:16.1873 UT
+setting:	20 February 2015 19:04:33.7988 UT
 -- Twilight --
 Duration: 1.40 h
 morning:	21 February 2015 06:21:43.9006 UT
-evening:	20 February 2015 20:29:00.8920 UT
+evening:	20 February 2015 20:28:23.3299 UT
 
-Illuminated fraction of Moon's disk: 7.13 %
+Max illuminated fraction of Moon's disk: 7.71 % on 21 February 2015 06:21:43.9006 UT
+Mean illuminated fraction of Moon's disk: 7.13 %
 
 Minimum distance from Moon: 82.811 deg at 21 February 2015 01:58:35.1351 UT
 
@@ -87,18 +89,19 @@ setting:	28 July 2024 04:05:49.0478 UT
 
 * * SUN * *
 rising:  	28 July 2024 11:20:43.7878 UT
-setting:	27 July 2024 22:15:43.2329 UT
+setting:	27 July 2024 22:15:15.9654 UT
 -- Twilight --
-Duration: 1.39 h
+Duration: 1.40 h
 morning:	28 July 2024 09:57:06.9523 UT
-evening:	27 July 2024 23:39:20.0684 UT
+evening:	27 July 2024 23:38:59.6072 UT
 
-Illuminated fraction of Moon's disk: 50.59 %
+Max illuminated fraction of Moon's disk: 51.64 % on 27 July 2024 23:38:59.6072 UT
+Mean illuminated fraction of Moon's disk: 50.59 %
 
 Minimum distance from Moon: 167.928 deg at 28 July 2024 04:05:49.0478 UT
 
-Spica is visible for 04h 26m 28.9794s
-From:	27 July 2024 23:39:20.0684 UT
+Spica is visible for 04h 26m 49.4406s
+From:	27 July 2024 23:38:59.6072 UT
 To:  	28 July 2024 04:05:49.0478 UT
 ----------
 
@@ -121,18 +124,19 @@ setting:	19 May 2023 17:57:04.8465 UT
 
 * * SUN * *
 rising:  	19 May 2023 20:29:33.7239 UT
-setting:	19 May 2023 07:08:52.3876 UT
+setting:	19 May 2023 07:09:19.8756 UT
 -- Twilight --
 Duration: 1.44 h
 morning:	19 May 2023 19:03:09.3327 UT
-evening:	19 May 2023 08:35:16.7788 UT
+evening:	19 May 2023 08:35:37.2189 UT
 
-Illuminated fraction of Moon's disk: 0.06 %
+Max illuminated fraction of Moon's disk: 0.13 % on 19 May 2023 08:35:37.2189 UT
+Mean illuminated fraction of Moon's disk: 0.06 %
 
 Minimum distance from Moon: 144.653 deg at 19 May 2023 17:57:04.8465 UT
 
-Spica is visible for 09h 21m 48.0677s
-From:	19 May 2023 08:35:16.7788 UT
+Spica is visible for 09h 21m 27.6276s
+From:	19 May 2023 08:35:37.2189 UT
 To:  	19 May 2023 17:57:04.8465 UT
 ----------
 
@@ -152,18 +156,19 @@ setting:	26 October 2023 14:08:40.9603 UT
 
 * * SUN * *
 rising:  	26 October 2023 13:38:28.7360 UT
-setting:	26 October 2023 00:42:45.2093 UT
+setting:	26 October 2023 00:43:46.2131 UT
 -- Twilight --
 Duration: 1.45 h
 morning:	26 October 2023 12:11:35.7027 UT
-evening:	26 October 2023 02:09:38.2426 UT
+evening:	26 October 2023 02:10:33.5313 UT
 
-Illuminated fraction of Moon's disk: 91.27 %
+Max illuminated fraction of Moon's disk: 92.64 % on 26 October 2023 12:11:35.7027 UT
+Mean illuminated fraction of Moon's disk: 91.28 %
 
 Minimum distance from Moon: 43.583 deg at 26 October 2023 12:11:35.7027 UT
 
-M31 is visible for 10h 01m 57.4601s
-From:	26 October 2023 02:09:38.2426 UT
+M31 is visible for 10h 01m 02.1714s
+From:	26 October 2023 02:10:33.5313 UT
 To:  	26 October 2023 12:11:35.7027 UT
 ----------
 
@@ -184,18 +189,19 @@ transit:	3 February 2024 01:14:07.6023 UT
 
 * * SUN * *
 rising:  	3 February 2024 10:20:35.0336 UT
-setting:	2 February 2024 23:29:48.5249 UT
+setting:	2 February 2024 23:30:17.6661 UT
 -- Twilight --
 Duration: 1.46 h
 morning:	3 February 2024 08:53:14.5214 UT
-evening:	3 February 2024 00:57:09.0372 UT
+evening:	3 February 2024 00:57:51.8551 UT
 
-Illuminated fraction of Moon's disk: 47.80 %
+Max illuminated fraction of Moon's disk: 49.45 % on 3 February 2024 00:57:51.8551 UT
+Mean illuminated fraction of Moon's disk: 47.80 %
 
 Minimum distance from Moon: 86.935 deg at 3 February 2024 08:53:14.5214 UT
 
-LMC is visible for 07h 56m 05.4842s
-From:	3 February 2024 00:57:09.0372 UT
+LMC is visible for 07h 55m 22.6663s
+From:	3 February 2024 00:57:51.8551 UT
 To:  	3 February 2024 08:53:14.5214 UT
 ----------
 
@@ -218,18 +224,19 @@ setting:	28 July 2023 10:36:23.0823 UT
 
 * * SUN * *
 rising:  	28 July 2023 06:30:54.1824 UT
-setting:	27 July 2023 20:04:55.4807 UT
+setting:	27 July 2023 20:05:31.6066 UT
 -- Twilight --
 Duration: 1.57 h
 morning:	28 July 2023 04:56:40.5231 UT
-evening:	27 July 2023 21:39:09.1400 UT
+evening:	27 July 2023 21:40:00.4961 UT
 
-Illuminated fraction of Moon's disk: 71.80 %
+Max illuminated fraction of Moon's disk: 73.29 % on 28 July 2023 04:56:40.5231 UT
+Mean illuminated fraction of Moon's disk: 71.81 %
 
 Minimum distance from Moon: 99.868 deg at 28 July 2023 04:56:40.5231 UT
 
-V1975 Cyg is visible for 07h 17m 31.3831s
-From:	27 July 2023 21:39:09.1400 UT
+V1975 Cyg is visible for 07h 16m 40.0270s
+From:	27 July 2023 21:40:00.4961 UT
 To:  	28 July 2023 04:56:40.5231 UT
 ----------
 
@@ -252,11 +259,11 @@ setting:	24 July 2023 19:21:51.8373 UT
 
 * * SUN * *
 rising:  	25 July 2023 04:17:51.5965 UT
-setting:	24 July 2023 19:08:54.1668 UT
+setting:	24 July 2023 19:09:53.9214 UT
 -- Twilight --
-Duration: 2.23 h
+Duration: 2.25 h
 morning:	25 July 2023 02:03:56.0146 UT
-evening:	24 July 2023 21:22:49.7487 UT
+evening:	24 July 2023 21:24:38.5953 UT
 
 Target is below the horizon
 Target is not visible!
@@ -281,18 +288,19 @@ setting:	22 December 2023 21:39:21.6048 UT
 
 * * SUN * *
 rising:  	23 December 2023 07:09:18.5873 UT
-setting:	22 December 2023 16:02:50.2336 UT
+setting:	22 December 2023 16:02:17.9813 UT
 -- Twilight --
 Duration: 1.85 h
 morning:	23 December 2023 05:18:07.0222 UT
-evening:	22 December 2023 17:54:01.7986 UT
+evening:	22 December 2023 17:53:29.7506 UT
 
-Illuminated fraction of Moon's disk: 84.27 %
+Max illuminated fraction of Moon's disk: 84.70 % on 23 December 2023 05:18:07.0222 UT
+Mean illuminated fraction of Moon's disk: 84.27 %
 
-Minimum distance from Moon: 99.378 deg at 22 December 2023 17:54:01.7986 UT
+Minimum distance from Moon: 99.376 deg at 22 December 2023 17:53:29.7506 UT
 
-Vega is visible for 06h 23m 21.3508s
-From:	22 December 2023 17:54:01.7986 UT
+Vega is visible for 06h 23m 53.3988s
+From:	22 December 2023 17:53:29.7506 UT
 To:  	22 December 2023 21:39:21.6048 UT
 From:	23 December 2023 02:40:05.4776 UT
 To:  	23 December 2023 05:18:07.0222 UT
@@ -315,18 +323,19 @@ transit:	25 October 2023 08:16:03.3869 UT
 
 * * SUN * *
 rising:  	25 October 2023 13:37:41.4824 UT
-setting:	25 October 2023 00:43:46.2131 UT
+setting:	25 October 2023 00:44:48.2469 UT
 -- Twilight --
-Duration: 1.45 h
+Duration: 1.44 h
 morning:	25 October 2023 12:10:54.1643 UT
-evening:	25 October 2023 02:10:33.5313 UT
+evening:	25 October 2023 02:11:30.0823 UT
 
-Illuminated fraction of Moon's disk: 83.50 %
+Max illuminated fraction of Moon's disk: 85.30 % on 25 October 2023 12:10:54.1643 UT
+Mean illuminated fraction of Moon's disk: 83.50 %
 
 Minimum distance from Moon: 97.901 deg at 25 October 2023 12:10:54.1643 UT
 
-Polaris is visible for 10h 00m 20.6330s
-From:	25 October 2023 02:10:33.5313 UT
+Polaris is visible for 09h 59m 24.0819s
+From:	25 October 2023 02:11:30.0823 UT
 To:  	25 October 2023 12:10:54.1643 UT
 ----------
 
@@ -348,11 +357,11 @@ transit:	25 October 2023 05:31:44.2472 UT
 
 * * SUN * *
 rising:  	25 October 2023 09:59:58.9224 UT
-setting:	24 October 2023 22:51:43.6101 UT
+setting:	24 October 2023 22:51:10.4877 UT
 -- Twilight --
 Duration: 1.40 h
 morning:	25 October 2023 08:35:49.9058 UT
-evening:	25 October 2023 00:15:52.6268 UT
+evening:	25 October 2023 00:15:08.1744 UT
 
 Target is always below the horizon
 Target is not visible!
@@ -375,7 +384,8 @@ transit:	20 June 2024 15:27:07.6203 UT
 
 Daylight never occurs
 
-Illuminated fraction of Moon's disk: 97.03 %
+Max illuminated fraction of Moon's disk: 98.56 % on 21 June 2024 00:00:00 UT
+Mean illuminated fraction of Moon's disk: 97.03 %
 
 Minimum distance from Moon: 96.726 deg at 20 June 2024 00:00:00 UT
 
@@ -421,18 +431,19 @@ setting:	3 November 1990 07:17:26.6133 UT
 
 * * SUN * *
 rising:  	3 November 1990 13:45:03.9370 UT
-setting:	3 November 1990 00:35:19.7805 UT
+setting:	3 November 1990 00:36:11.4404 UT
 -- Twilight --
 Duration: 1.46 h
 morning:	3 November 1990 12:17:17.6896 UT
-evening:	3 November 1990 02:03:06.0278 UT
+evening:	3 November 1990 02:03:50.4157 UT
 
-Illuminated fraction of Moon's disk: 99.69 %
+Max illuminated fraction of Moon's disk: 99.77 % on 3 November 1990 02:03:50.4157 UT
+Mean illuminated fraction of Moon's disk: 99.69 %
 
-Minimum distance from Moon: 98.272 deg at 3 November 1990 02:03:06.0278 UT
+Minimum distance from Moon: 98.275 deg at 3 November 1990 02:03:50.4157 UT
 
-Vega is visible for 05h 14m 20.5855s
-From:	3 November 1990 02:03:06.0278 UT
+Vega is visible for 05h 13m 36.1976s
+From:	3 November 1990 02:03:50.4157 UT
 To:  	3 November 1990 07:17:26.6133 UT
 ----------
 

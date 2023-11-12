@@ -3,11 +3,11 @@ from visibility.sky import initialize_data, visibility
 
 if __name__ == '__main__':
     data_file = 'targets.csv'
-    st, end = 0,None
+    st, end = 2,3#,None
     sel = slice(st,end)
-    window = True
+    window = False
     save_fig = False
-    displot = False
+    displot = True
     targets, observatories, dates = initialize_data(data_file,sel=sel)    
 
 
