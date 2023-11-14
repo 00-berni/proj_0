@@ -1518,9 +1518,6 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     plt.plot(dayrange,sunalt.deg - sunrad.deg,'y',alpha=0.5)
     plt.plot(dayrange,sunalt.deg + sunrad.deg,'y',alpha=0.5)
     if type(tw) != bool: 
-        print(dayrange[0],dayrange[-1])
-        print(tw[1],tw[0])
-        print(suntw.print_date())
         plt.axvline(suntw.jd[0],ymin=0,ymax=1,linestyle=(0,(5,10)),alpha=0.4,color='gold',label='twilight')
         plt.axvline(suntw.jd[1],ymin=0,ymax=1,linestyle=(0,(5,10)),alpha=0.4,color='gold')
 
@@ -1678,11 +1675,11 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
     obj.obj_info()
     
     # computing trans., ris. and set. of the target
-    m = tran_ris_set(date,obs,obj,True)
+    m = tran_ris_set(date,obs,obj,False)
     # initializing Sun
     SUN = Sun()
     # computing twilights
-    tw, t_tw, mtw = SUN.twilight(date,obs,results=True,add_res=True)
+    tw, t_tw, mtw = SUN.twilight(date,obs,results=False,add_res=True)
 
     ## Visibility Routine
     # checking the Sun
@@ -1714,18 +1711,20 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
             shift = 1
             if abs(start_point-tw[0]) < abs(start_point-tw[1]):
                 shift = -1
-            print(shift)
-            newtw, t_tw, newmtw = SUN.twilight(date+shift,obs,results=True,add_res=True)
+            newtw, t_tw, newmtw = SUN.twilight(date+shift,obs,results=False,add_res=True)
             pos = (1-shift)//2
             tw[pos]  = Date((date+shift).date,newtw.val[pos]).jd    
             mtw[pos] = Date((date+shift).date,newmtw.val[pos]).jd
             del pos, shift
         else:
             if tw[1] > tw[0]:
-                print('hey')
-                newtw, t_tw, newmtw = SUN.twilight(date-1,obs,results=True,add_res=True)
+                newtw, t_tw, newmtw = SUN.twilight(date-1,obs,results=False,add_res=True)
                 tw[1]  = Date((date-1).date,newtw.val[1]).jd    
                 mtw[1] = Date((date-1).date,newmtw.val[1]).jd
+            if tw[0] > tw[1]+1:
+                newtw, t_tw, newmtw = SUN.twilight(date-1,obs,results=False,add_res=True)
+                tw[0]  = Date((date-1).date,newtw.val[0]).jd    
+                mtw[0] = Date((date-1).date,newmtw.val[0]).jd
         start_point = mtw[1] 
         window = np.copy([tw])
         # storing information about Sun
@@ -1918,15 +1917,16 @@ def visibility(date: Date, obj: Target, obs: GeoPos, airmass: float = 3., numpoi
         print(f'transit:\t{m.print_date()}')
         m = m.jd
     else:
-        print(f'transit:\t{Date(jd=tran).print_date()}')
-        print(f'rising: \t{Date(jd=rise).print_date()}')
-        print(f'setting:\t{Date(jd=set).print_date()}')
+        # print(f'transit:\t{Date(jd=tran).print_date()}')
+        # print(f'rising: \t{Date(jd=rise).print_date()}')
+        # print(f'setting:\t{Date(jd=set).print_date()}')
         m = Date(jd=np.array([tran,rise,set])).jd
-    print(sun_str)
-    print(f"\nMax illuminated fraction of Moon's disk: {maxk*100:.2f} % on {Date(jd=dmaxk).print_date()}")
-    print(f"Mean illuminated fraction of Moon's disk: {k*100:.2f} %")
-    print(f'\nMinimum distance from Moon: {dists[idx]:.3f} deg at {Date(jd=dtime[idx]).print_date()}')
+    # print(sun_str)
+    # print(f"\nMax illuminated fraction of Moon's disk: {maxk*100:.2f} % on {Date(jd=dmaxk).print_date()}")
+    # print(f"Mean illuminated fraction of Moon's disk: {k*100:.2f} %")
+    # print(f'\nMinimum distance from Moon: {dists[idx]:.3f} deg at {Date(jd=dtime[idx]).print_date()}')
     # printing information about the visibility
+    print(f'** {maxk*100:.2f} %\t{Date(jd=dmaxk).print_date()} **')
     print('\n' + name + f" is visible for {Time.str_time(hvis,'',sep=['h ','m ','s'])[:-1]}")
     print(strresult + SEP)
     if display_plots:
