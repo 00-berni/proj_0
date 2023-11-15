@@ -7,7 +7,7 @@ import numpy as np
 from .Tclasses import *
 from visibility.Angles import Angles, HAngles
 
-def nutation_corr(date: Date) -> tuple[HAngles, HAngles]:
+def nutation_corr(date: Date) -> tuple[Angles, Angles]:
     """Computing nutation correction
 
     The accuracy of this formula is 
@@ -92,7 +92,7 @@ def Green_ST(date: Date, nut_corr: bool = False, epoch: str = 'J2000.0') -> HAng
     if nut_corr:
         Dlon, De = nutation_corr(date)
         e = mean_obliquity(date) + De
-        theta0 += Dlon.deg*np.cos(e.rad)/15
+        theta0 += Dlon.deg*np.cos(e.rad) / 15
     return HAngles(theta0,'hms')
 
 
