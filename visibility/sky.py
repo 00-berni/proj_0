@@ -1233,7 +1233,7 @@ def compute_alt(date: Date, obs_pos: GeoPos, obj: Target, refcor: bool = False) 
     return alt 
 
 
-def trajectory(date: Date, obs_pos: GeoPos, obj: Target, numpoint: int = 1000) -> tuple[Angles, np.ndarray]:
+def trajectory(date: Date, obs_pos: GeoPos, obj: Target, numpoint: int = 400) -> tuple[Angles, np.ndarray]:
     """Function to trace the trajectory of a star during a day
 
     Function returns the computed apparent altitudes and the corrispondent 
@@ -1474,7 +1474,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
             if w[0] > w[1]: w = w[::-1]
             subtitle += 'from ' + Date(jd=w[0],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date() + ' to ' + Date(jd=w[1],timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar).print_date()
             cnt += 1
-        plt.title(subtitle,fontsize=16)
+        plt.title(subtitle,fontsize=15)
 
     ## Target
     # computing trajectory
@@ -1484,7 +1484,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     # computing the corresponding apparent altitude
     ealt = compute_alt(event,obs,obj,True)    
     # plotting all
-    plt.plot(dayrange,alt.deg,'b',label=obj.name)
+    plt.plot(dayrange,alt.deg,'.b',label=obj.name)
     if not win_par:
         if type(m) != np.ndarray:
             plt.plot(event.jd,ealt.deg,'vg',label='transit')
@@ -1537,7 +1537,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
     hour = date.time.hour()
     # factor to have a nice display
     N = 25 if hour <= (int(hour)+0.5) else 26
-    # ticks of the plot in jds
+    # ticks of the plot in jds20
     ticks = Date(date.date, (np.arange(0,N,1)+int(date.time.hour()))*3600,timetype=date.time.tytime,timezone=date.timezone,dl_save=date.dls,calendar=date.calendar)
     # label of ticks is in hours
     labelticks = np.round(ticks.time.hour(),0).astype(int)
@@ -1563,16 +1563,16 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
             startpos = window.min()
         else:
             startpos = dayrange[0]
-        plt.annotate('$X$ = 3',(startpos,altmu),(startpos-0.03,altmu+textpos),fontsize=12,color='white')
+        plt.annotate('$X$ = 3',(startpos,altmu),(startpos-0.03,altmu+textpos),fontsize=15,color='white')
 
-    plt.xticks(ticks.jd,labelticks,fontsize=15)
+    plt.xticks(ticks.jd,labelticks,fontsize=16)
     plt.yticks(fontsize=15)
-    plt.xlabel('UT [h]',fontsize=15)
-    plt.ylabel('alt$_0$ [deg]',fontsize=15)
+    plt.xlabel('UT [h]',fontsize=18)
+    plt.ylabel('alt$_0$ [deg]',fontsize=18)
     plt.grid(linestyle='dotted',color='gray',alpha=0.5)
     # information about the place of the observatory
     location_string = obs.place_info(True)
-    plt.text(0.01, 0.02, location_string, fontsize=14, transform=plt.gcf().transFigure)
+    plt.text(0.01, 0.02, location_string, fontsize=16, transform=plt.gcf().transFigure)
     # condition to show the illuminated fraction of the Moon's disk
     if k is not None:
         info_str = f'Mean Moon ill. frac.: {k*100:.2f} %'
@@ -1604,7 +1604,7 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
                             alt_pos = 2
                         plt.annotate(f'{dist[i]:.0f}$^\circ$',(dtime[i],dalt[i]),(dtime[i]-0.005,dalt[i]+alt_pos),color='white',fontsize=12)
         # displaying minimum distance
-        plt.text(0.7, 0.02, info_str, fontsize=14, transform=plt.gcf().transFigure)
+        plt.text(0.7, 0.02, info_str, fontsize=16, transform=plt.gcf().transFigure)
     # case for a not-visible target
     if not_vis is not None:
         props = dict(boxstyle='round', facecolor='red', alpha=0.8)
@@ -1618,9 +1618,9 @@ def visibility_plot(truedate: Date, date: Date, obj: Target, obs: GeoPos, SUN: S
         max_moonalt = max(moonalt.deg)
         plt.xlim(*xlims)
         plt.ylim(0,max(max_alt,max_sunalt,max_moonalt)+20)
-        pos_leg = (0.85,0.8)
+        pos_leg = (0.8,0.45)
     if not_vis is None:
-        plt.legend(numpoints=1,facecolor='black',labelcolor='w',bbox_to_anchor=pos_leg,fontsize=13).get_frame().set_alpha(None)
+        plt.legend(numpoints=1,facecolor='black',labelcolor='w',bbox_to_anchor=pos_leg,fontsize=18).get_frame().set_alpha(None)
     # condtion to save automatically the figure
     if save_fig:
         from .stuff import RESULTS_FOLDER, ph
