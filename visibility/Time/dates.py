@@ -1,3 +1,6 @@
+__author__  = '00-berni'
+__version__ = '0.0.0'
+
 import numpy as np
 # import os.path as ph
 # PROJECT_FOLDER = ph.split(ph.split(ph.dirname(ph.realpath(__file__)))[0])[0]

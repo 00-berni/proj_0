@@ -1,4 +1,6 @@
-## required packages
+__author__  = '00-berni'
+__version__ = '0.0.0'
+
 import os.path as ph
 import numpy as np
 
